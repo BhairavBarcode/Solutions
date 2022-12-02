@@ -1,0 +1,65 @@
+$scope.GetSubItem = function () {
+        for (var i = 0; i < $('#tblItem tfoot th').length; i++) {
+            if (i > 0) {
+                var title = $('#tblItem tfoot th:eq(' + i + ')').text();
+                $('#tblItem tfoot th:eq(' + i + ')').html('<input type="text" class="form-control" placeholder="' + title + '" />');
+            }
+        }
+
+        tblItem = $('#tblItem').dataTable({
+            'destroy': true,
+            'bProcessing': false,
+            'bServerSide': true,
+            'sAjaxSource': '/MRP_OrderConfirmation/GetItemList',
+            "scrollX": true,
+            //"fnServerParams": function (aoData) {
+            //    aoData.push(
+            //        { "name": "Id", "value": $scope.mdlMRP_BOMMaster.ItemAuto },
+            //    );
+            //},
+            "aoColumns": [
+                {
+                    "mData": "SRNo", className: "text-center",
+                    "render": function (data, type, row, meta) {
+                        return '<input type="hidden" id="hdnmItemAuto" value="' + row.AutoTrNo + '" /><input type="hidden" id="hdnmWeight" value="' + row.Weight + '" />' + data;
+                    },
+                },
+                { "mData": "ItemCode", className: "text-center" },
+                { "mData": "ItemName" },
+            ],
+        });
+
+        $('#tblItem_wrapper .dataTables_filter input').addClass("pagesize");
+        $('#tblItem_wrapper .dataTables_length select').addClass("pagesize");
+        $('#tblItem_wrapper .dataTables_filter').css('display', 'none');
+
+        tblItem.api().columns().eq(0).each(function (colIdx) {
+            $('input', tblItem.api().column(colIdx).footer()).on('change', function () {
+                tblItem.api().column(colIdx).search(this.value).draw();
+            });
+        });
+    }
+    $scope.GetSubItem();
+    $('#tblPackaging').delegate('#btnSearchItem', 'click', function (e) {
+        var srowId = $(this).closest('tr').index();
+        acsrowId = srowId;
+        $("#tblItem tbody").delegate("tr", "click", function (e) {
+            var rowIndex = $(this).closest('tr').index();
+            if (acsrowId >= 0) {
+                $scope.mdlOC.lstPackaging[acsrowId].ItemAuto = $("#tblItem tbody tr:eq('" + rowIndex + "')").find("#hdnmItemAuto").val();
+                $scope.mdlOC.lstPackaging[acsrowId].ItemCode = $("#tblItem tbody tr:eq('" + rowIndex + "') td:eq(1)").text();
+                $scope.mdlOC.lstPackaging[acsrowId].ItemName = $("#tblItem tbody tr:eq('" + rowIndex + "') td:eq(2)").text();
+                $scope.$apply();
+            }
+            $('#ItemModal').modal('hide');
+            return false;
+        });
+        tblItem.api().column().draw();
+        $("#ItemModal").modal('show');
+        setTimeout(function () {
+            $('#tblItem tfoot tr:eq(0) th:eq(1)').find('input[type=text]').focus();
+        }, 500);
+
+
+        return false;
+    });

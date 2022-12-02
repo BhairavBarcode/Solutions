@@ -1,0 +1,1463 @@
+using CrystalDecisions.CrystalReports.Engine;
+using CrystalDecisions.Shared;
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
+using System.Data.SqlTypes;
+using System.Globalization;
+using System.IO;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
+using ULTRA_MVC.DAL;
+using ULTRA_MVC.Models;
+
+namespace ULTRA_MVC.Controllers
+{
+    [UserLogin]
+    public class MRP_DispatchController : Controller
+    {
+        YearCommonDB objDB = new YearCommonDB();
+        YearCommonDB CDB = new YearCommonDB();
+        // GET: MRP_Dispatch
+        public ActionResult MRP_DispatchEntryPage()
+        {
+            ViewBag.pageTitle = "Dispatch Page";
+            return View();
+        }
+        public ActionResult MRP_DispatchListPage()
+        {
+            ViewBag.pageTitle = "Dispatch List Page";
+            return View();
+        }
+        [HttpGet]
+        public JsonResult PageInit()
+        {
+            mdlMRP_Dispatch objPR = new mdlMRP_Dispatch();
+            try
+            {
+                objPR.DCDate = DateTime.Now.ToString("dd/MM/yyyy");
+                objPR.OutwardDate = DateTime.Now.ToString("dd/MM/yyyy");
+                return Json(objPR, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return Json(objPR, JsonRequestBehavior.AllowGet);
+            }
+        }
+        [HttpGet]
+        public JsonResult GetPartyList()
+        {
+            List<mdlPartyList> lstParty = new List<mdlPartyList>();
+            try
+            {
+                int iDisplayLength = int.Parse(this.ControllerContext.HttpContext.Request["iDisplayLength"]);
+                int iDisplayStart = int.Parse(this.ControllerContext.HttpContext.Request["iDisplayStart"]);
+
+                int PageNumber = (iDisplayStart / iDisplayLength) + 1;
+                int RowsOfPage = iDisplayLength;
+
+                var code = (Request["sSearch_1"] == null ? "" : Request["sSearch_1"]);
+                var Name = (Request["sSearch_2"] == null ? "" : Request["sSearch_2"]);
+
+                SqlParameter[] paraColl = new SqlParameter[]  {
+                                          new SqlParameter("@p_Operation",1),
+                                          new SqlParameter("@p_sVendorCode", code),
+                                          new SqlParameter("@p_sVendorName", Name),
+                                          new SqlParameter("@p_PageNumber",PageNumber),
+                                          new SqlParameter("@p_RowsOfPage",RowsOfPage),
+                };
+                DataTable DT = objDB.GetDataTable("SP_MRP_LedgerMst", paraColl);
+
+                int no = ((PageNumber - 1) * RowsOfPage + 1);
+                lstParty = (from DataRow dr in DT.Rows
+                            select new mdlPartyList
+                            {
+                                No = no++,
+                                RecordCnt = Convert.ToInt32(dr["TotalRecord"]),
+                                PartyId = Convert.ToInt32(dr["LedgerID"]),
+                                PartyCode = Convert.ToString(dr["LedgerCode"]),
+                                PartyName = Convert.ToString(dr["LedgerName"]),
+                            }).ToList();
+
+                var result = new
+                {
+                    iTotalRecords = (lstParty.Count == 0 ? 0 : lstParty[0].RecordCnt),
+                    iTotalDisplayRecords = (lstParty.Count == 0 ? 0 : lstParty[0].RecordCnt),
+                    aaData = lstParty
+                                    .ToList()
+                };
+                return Json(result, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return Json(lstParty, JsonRequestBehavior.AllowGet);
+            }
+        }
+        [HttpGet]
+        public JsonResult GetWoItemList(string DId,int LId,string RMId)
+        {
+            List<mdlMRP_WOHelp> lstItem = new List<mdlMRP_WOHelp>();
+            try
+            {
+                int iDisplayLength = int.Parse(this.ControllerContext.HttpContext.Request["iDisplayLength"]);
+                int iDisplayStart = int.Parse(this.ControllerContext.HttpContext.Request["iDisplayStart"]);
+
+                int PageNumber = (iDisplayStart / iDisplayLength) + 1;
+                int RowsOfPage = iDisplayLength;
+
+                var WONo = (Request["sSearch_1"] == null ? "" : Request["sSearch_1"]);
+                var RMNo = (Request["sSearch_2"] == null ? "" : Request["sSearch_2"]);
+                var Code = (Request["sSearch_3"] == null ? "" : Request["sSearch_3"]);
+                var Desc = (Request["sSearch_4"] == null ? "" : Request["sSearch_4"]);
+                var Qty = (Request["sSearch_5"] == null ? "" : Request["sSearch_5"]);
+                var PendingQty = (Request["sSearch_6    "] == null ? "" : Request["sSearch_6"]);
+
+
+                SqlParameter[] paraColl = new SqlParameter[]  {
+                                          new SqlParameter("@p_Operation",7),
+                                          new SqlParameter("@P_WIds",DId),
+                                          new SqlParameter("@P_RMIds",RMId),
+                                          new SqlParameter("@P_LId",LId),
+                                          new SqlParameter("@P_WONO",WONo),
+                                          new SqlParameter("@P_RMNo",RMNo),
+                                          new SqlParameter("@P_ItemDescription",Desc),
+                                          new SqlParameter("@P_ItemCode",Code),
+                                          new SqlParameter("@P_Qty",Qty), 
+                                            new SqlParameter("@P_PendingQty",PendingQty),
+                                          new SqlParameter("@p_PageNumber",PageNumber),
+                                          new SqlParameter("@p_RowsOfPage",RowsOfPage),
+                };
+                DataTable DT = objDB.GetDataTable("SP_MRP_WOHelp", paraColl);
+
+                int no = ((PageNumber - 1) * RowsOfPage + 1);
+                lstItem = (from DataRow dr in DT.Rows
+                           select new mdlMRP_WOHelp
+                           {
+                               SRNo = no++,
+                               RecordCnt = Convert.ToInt32(dr["TotalRecord"]),
+                               WOAuto = Convert.ToString(dr["AutoTrNo"]),
+                               WOSubAuto = Convert.ToString(dr["WOSubAuto1"]),
+                               WONo = Convert.ToString(dr["WONo"]),
+                               ItemDescription = Convert.ToString(dr["ItemName"]),
+                               ItemCode = Convert.ToString(dr["ItemCode"]),
+                               ItemAuto = Convert.ToString(dr["ItemAuto"]),
+                               Qty = Convert.ToString(dr["Qty"]),
+                               PendingQty = Convert.ToString(dr["PendingQty"]),
+                               RMNo = Convert.ToString(dr["RMNo"]),
+                           }).ToList();
+
+                var result = new
+                {
+                    iTotalRecords = (lstItem.Count == 0 ? 0 : lstItem[0].RecordCnt),
+                    iTotalDisplayRecords = (lstItem.Count == 0 ? 0 : lstItem[0].RecordCnt),
+                    aaData = lstItem.ToList()
+                };
+                return Json(result, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return Json(lstItem, JsonRequestBehavior.AllowGet);
+            }
+        }
+        public ActionResult GetMultipleWOItem(string Ids, string RMIds)
+        {
+            YearCommonDB objDB = new YearCommonDB();
+            List<mdlMRP_WOHelp> lst = new List<mdlMRP_WOHelp>();
+            SqlParameter[] paraColl;
+            try
+            {
+                paraColl = new SqlParameter[] {
+                           new SqlParameter("@P_Operation", 11),
+                           new SqlParameter("@P_SWoSubID", Ids),
+                           new SqlParameter("@P_RMSWoSubID", RMIds),
+                };
+                DataTable DT = objDB.GetDataTable("SP_MRP_MaterialIssueMain", paraColl);
+
+                lst = (from DataRow row in DT.Rows
+                       select new mdlMRP_WOHelp
+                       {
+                           SItemAuto = Convert.ToString(row["ItemAuto"]),
+                           WONo = Convert.ToString(row["WONo"]),
+                           WOSubAuto = Convert.ToString(row["WoSubAuto"]),
+                           RMAuto = Convert.ToString(row["RMAuto"]),
+                           RMNo = Convert.ToString(row["RMNo"]),
+                           WOAuto = Convert.ToString(row["WoAuto"]),
+                           SItemCode = Convert.ToString(row["ItemCode"]),
+                           Qty = Convert.ToString(row["Qty"]),
+                           SItemDescription = Convert.ToString(row["ItemName"]),
+                           Unit = Convert.ToString(row["UnitName"]),
+                           UnitAuto = Convert.ToString(row["UnitAuto"]),
+                           PendingQty = Convert.ToString(row["PendingQty"]),
+                           CastingWeight = Convert.ToString(row["CastingWeight"]),
+                           TotalWeight = Convert.ToString(row["TotalWeight"]),                         
+                       }).ToList();
+                return Json(lst, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return Json("Error" + ex.Message.ToString());
+            }
+        }
+        [HttpGet]
+        public JsonResult GetEmployeeList()
+        {
+            List<mdlMRP_EmployeeMaster> lstItem = new List<mdlMRP_EmployeeMaster>();
+            try
+            {
+                int iDisplayLength = int.Parse(this.ControllerContext.HttpContext.Request["iDisplayLength"]);
+                int iDisplayStart = int.Parse(this.ControllerContext.HttpContext.Request["iDisplayStart"]);
+
+                int PageNumber = (iDisplayStart / iDisplayLength) + 1;
+                int RowsOfPage = iDisplayLength;
+
+                var Code = (Request["sSearch_1"] == null ? "" : Request["sSearch_1"]);
+                var Name = (Request["sSearch_2"] == null ? "" : Request["sSearch_2"]);
+
+                SqlParameter[] paraColl = new SqlParameter[]  {
+                                          new SqlParameter("@p_Operation",1),
+                                          new SqlParameter("@p_sEmpCode",Code),
+                                          new SqlParameter("@p_sEmpName",Name),
+                                          new SqlParameter("@p_PageNumber",PageNumber),
+                                          new SqlParameter("@p_RowsOfPage",RowsOfPage),
+                };
+                DataTable DT = objDB.GetDataTable("SP_MRP_EmployeeHelp", paraColl);
+
+                int no = ((PageNumber - 1) * RowsOfPage + 1);
+                lstItem = (from DataRow dr in DT.Rows
+                           select new mdlMRP_EmployeeMaster
+                           {
+                               SrNo = no++,
+                               RecordCnt = Convert.ToInt32(dr["TotalRecord"]),
+                               AutoTrNo = Convert.ToInt32(dr["AutoTrNo"]),
+                               EmployeeCode = Convert.ToString(dr["EmployeeCode"]),
+                               EmployeeName = Convert.ToString(dr["EmployeeName"]),
+
+                           }).ToList();
+
+                var result = new
+                {
+                    iTotalRecords = (lstItem.Count == 0 ? 0 : lstItem[0].RecordCnt),
+                    iTotalDisplayRecords = (lstItem.Count == 0 ? 0 : lstItem[0].RecordCnt),
+                    aaData = lstItem.ToList()
+                };
+                return Json(result, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return Json(lstItem, JsonRequestBehavior.AllowGet);
+            }
+        }
+        [HttpPost]
+        public JsonResult SaveMRP_DispatchData(mdlMRP_Dispatch objm)
+        {
+            string Result;
+            try
+            {
+                DateTime OutwardDate = new DateTime();
+                DateTime DCDate = new DateTime();
+                if (objm.DCDate == null)
+                {
+                    DCDate = DateTime.ParseExact("01/01/1990", "dd/MM/yyyy", CultureInfo.InvariantCulture);
+                }
+                else
+                {
+                    DCDate = DateTime.ParseExact(objm.DCDate, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+                }
+
+                if (objm.OutwardDate == null)
+                {
+                    OutwardDate = DateTime.ParseExact("01/01/1990", "dd/MM/yyyy", CultureInfo.InvariantCulture);
+                }
+                else
+                {
+                    OutwardDate = DateTime.ParseExact(objm.OutwardDate, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+                }
+                YearCommonDB objDB = new YearCommonDB();
+                SqlParameter[] paraColl;
+                paraColl = paraColl = new SqlParameter[]  {
+                                             new SqlParameter("@P_Operation", 3),
+                                             new SqlParameter("@p_Id", SqlDbType.Int),
+                                             new SqlParameter("@p_ProcessAuto",objm.ProcessAuto),
+                                             new SqlParameter("@p_DcNo",objm.DCNo),
+                                             new SqlParameter("@p_DcDate",(DCDate.ToString("dd/MM/yyyy")=="01/01/1990"? SqlDateTime.Null : DCDate)),
+                                             new SqlParameter("@p_LedgerAuto",objm.PartyAuto),
+                                             new SqlParameter("@p_TCompany",objm.TransportCompany),
+                                             new SqlParameter("@p_TMode",objm.TransportMode),
+                                             new SqlParameter("@p_TRemarks",objm.TRemarks),
+                                             new SqlParameter("@p_LRNo",objm.LRNo),
+                                             new SqlParameter("@p_BillSeriesID",objm.BillSeriesID),
+                                             new SqlParameter("@p_BillSeries",objm.BillSeries),
+                                             new SqlParameter("@p_VehicleNo",objm.VehicleNo),
+
+                                             new SqlParameter("@p_OutwardDate",(OutwardDate.ToString("dd/MM/yyyy")=="01/01/1990"? SqlDateTime.Null : OutwardDate)),
+                                             new SqlParameter("@p_CreatedBy", HttpContext.Session["UserID"].ToString()),
+                };
+                paraColl[1].Direction = ParameterDirection.Output;
+                Result = objDB.CRUDOperation("SP_MRP_Dispatch", paraColl);
+                var Id = Convert.ToInt32(paraColl[1].Value);
+
+                if (Id > 0)
+                {
+                    if (objm.lstPackaging != null)
+                    {
+                        foreach (Packaging objProd in objm.lstPackaging)
+                        {
+                            if (objProd.PItemAuto > 0)
+                            {
+
+
+                                paraColl = paraColl = new SqlParameter[]  {
+                                             new SqlParameter("@P_Operation", 16),
+                                             new SqlParameter("@p_AutoTrNo", Id),
+                                             new SqlParameter("@p_ItemAuto", objProd.PItemAuto),
+                                             new SqlParameter("@p_Qty", objProd.PQty),
+                                             new SqlParameter("@p_PType", objProd.PackingType),
+                                             new SqlParameter("@p_CreatedBy", HttpContext.Session["UserID"].ToString()),
+                        };
+                                Result = objDB.CRUDOperation("SP_MRP_Dispatch", paraColl);
+                            }
+                        }
+                    }
+
+                    foreach (mdlMRP_DispatchSub objProd in objm.lstSub)
+                    {
+                        paraColl = paraColl = new SqlParameter[]  {
+                                             new SqlParameter("@P_Operation", 4),
+                                             new SqlParameter("@p_Id", SqlDbType.Int),
+                                             new SqlParameter("@p_AutoTrNo", Id),
+                                             new SqlParameter("@p_ItemAuto", objProd.SItemAuto),
+                                             new SqlParameter("@p_EmployeeAuto", objProd.EmployeeAuto),
+                                             new SqlParameter("@p_WoAuto", objProd.WOAuto),
+                                             new SqlParameter("@p_RMAuto", objProd.RMAuto),
+                                             new SqlParameter("@p_WoSubAuto", objProd.WOSubAuto),
+                                             new SqlParameter("@p_Qty", objProd.Qty),
+                                             new SqlParameter("@p_Remarks", objProd.Remarks),
+                                              new SqlParameter("@p_CastingWeight", objProd.CastingWeight),
+                                               new SqlParameter("@p_TotalWeight", objProd.TotalWeight),                                            
+                            
+                                             new SqlParameter("@p_CreatedBy", HttpContext.Session["UserID"].ToString()),
+                        };
+
+                        paraColl[1].Direction = ParameterDirection.Output;
+                        Result = objDB.CRUDOperation("SP_MRP_Dispatch", paraColl);
+                        var SubId = Convert.ToInt32(paraColl[1].Value);
+                        if (objProd.ChekList != null)
+                        {
+                            foreach (mdlOCCheckList objSubsub in objProd.ChekList)
+                            {
+                                paraColl = paraColl = new SqlParameter[]  {
+                                             new SqlParameter("@P_Operation", 24),
+                                             new SqlParameter("@p_MainAuto", Id),
+                                             new SqlParameter("@p_SubAuto", SubId),
+                                             new SqlParameter("@p_ProcessAuto", Convert.ToInt32(objm.ProcessAuto==""?"0":objm.ProcessAuto)),
+                                             new SqlParameter("@p_CheckListAuto", objSubsub.CheckListAuto),
+                                             new SqlParameter("@p_IsChecked", objSubsub.IsChecked),
+                                             new SqlParameter("@p_CreatedBy", HttpContext.Session["UserID"].ToString()),
+                                };
+                                Result = objDB.CRUDOperation("SP_MRP_Dispatch", paraColl);
+                            }
+
+                        }
+
+                    }
+                    if (objm.lstClientDoc != null)
+                    {
+                        foreach (ClientDoc objs in objm.lstClientDoc)
+                        {
+                            if (objs.OriginalDocName != null)
+                            {
+                                paraColl = new SqlParameter[] {
+                                     new SqlParameter("@p_Operation", 11),
+                                     new SqlParameter("@p_AutoTrNo",Id),
+                                     new SqlParameter("@P_Name",objs.Name),
+                                     new SqlParameter("@p_DocName",objs.DocName),
+                                     new SqlParameter("@p_OriginalDocPath",objs.OriginalDocName),
+                                     new SqlParameter("@p_EntryType",objs.EntryType),
+                                     new SqlParameter("@p_CreatedBy", HttpContext.Session["UserID"].ToString()),
+                                };
+                                Result = objDB.CRUDOperation("SP_MRP_Dispatch", paraColl);
+                            }
+                        }
+                    }
+                    if (objm.lstClientIns != null)
+                    {
+                        foreach (ClientDoc objs in objm.lstClientIns)
+                        {
+                            if (objs.OriginalDocName != null)
+                            {
+                                paraColl = new SqlParameter[] {
+                                     new SqlParameter("@p_Operation", 11),
+                                     new SqlParameter("@p_AutoTrNo",Id),
+                                     new SqlParameter("@P_Name",objs.Name),
+                                     new SqlParameter("@p_DocName",objs.DocName),
+                                     new SqlParameter("@p_OriginalDocPath",objs.OriginalDocName),
+                                     new SqlParameter("@p_EntryType",objs.EntryType),
+                                     new SqlParameter("@p_CreatedBy", HttpContext.Session["UserID"].ToString()),
+                                };
+                                Result = objDB.CRUDOperation("SP_MRP_Dispatch", paraColl);
+                            }
+                        }
+                    }
+                    if (objm.lstClientShipAtt != null)
+                    {
+                        foreach (ClientDoc objs in objm.lstClientShipAtt)
+                        {
+                            if (objs.OriginalDocName != null)
+                            {
+                                paraColl = new SqlParameter[] {
+                                     new SqlParameter("@p_Operation", 11),
+                                     new SqlParameter("@p_AutoTrNo",Id),
+                                     new SqlParameter("@P_Name",objs.Name),
+                                     new SqlParameter("@p_DocName",objs.DocName),
+                                     new SqlParameter("@p_OriginalDocPath",objs.OriginalDocName),
+                                     new SqlParameter("@p_EntryType",objs.EntryType),
+                                     new SqlParameter("@p_CreatedBy", HttpContext.Session["UserID"].ToString()),
+                                };
+                                Result = objDB.CRUDOperation("SP_MRP_Dispatch", paraColl);
+                            }
+                        }
+                    }
+                }
+                CDB.StockOperation("MRP_DispatchMain", Id, true);
+                CDB.StockOperation("MRP_DispatchMain", Id, false);
+                return Json(Result);
+            }
+
+            catch (Exception ex)
+            {
+                return Json("Error" + ex.Message.ToString());
+            }
+        }
+
+        [HttpGet]
+        public JsonResult GetMRP_DispatchData()
+        {
+            List<mdlMRP_Dispatch> lstMake = new List<mdlMRP_Dispatch>();
+            try
+            {
+                int iDisplayLength = int.Parse(this.ControllerContext.HttpContext.Request["iDisplayLength"]);
+                int iDisplayStart = int.Parse(this.ControllerContext.HttpContext.Request["iDisplayStart"]);
+
+                int PageNumber = (iDisplayStart / iDisplayLength) + 1;
+                int RowsOfPage = iDisplayLength;
+
+                var NO = (Request["sSearch_2"] == null ? "" : Request["sSearch_2"]);
+                var Date = (Request["sSearch_3"] == null ? "" : Request["sSearch_3"]);
+                var Name = (Request["sSearch_4"] == null ? "" : Request["sSearch_4"]);
+
+
+                SqlParameter[] paraColl = new SqlParameter[]  {
+                                          new SqlParameter("@P_Operation",1),
+                                          new SqlParameter("@p_DcNo", NO),
+                                          new SqlParameter("@p_sDcDate", Date),
+                                          new SqlParameter("@P_LedgerName", Name),
+                                          new SqlParameter("@p_PageNumber",PageNumber),
+                                          new SqlParameter("@p_RowsOfPage",RowsOfPage),
+                };
+                DataTable DT = objDB.GetDataTable("SP_MRP_Dispatch", paraColl);
+
+                int no = ((PageNumber - 1) * RowsOfPage + 1);
+                lstMake = (from DataRow dr in DT.Rows
+                           select new mdlMRP_Dispatch
+                           {
+                               SrNo = no++,
+                               RecordCnt = Convert.ToInt32(dr["TotalRecord"]),
+                               AutoTrNo = Convert.ToString(dr["AutoTrNo"]),
+                               DCNo = Convert.ToString(dr["DCNo"]),
+                               DCDate = Convert.ToString(dr["DCDate"]),
+                               Party = Convert.ToString(dr["LedgerName"]),
+                               IsAutho = Convert.ToInt32(dr["IsAutho"]),
+                           }).ToList();
+
+                var result = new
+                {
+                    iTotalRecords = (lstMake.Count == 0 ? 0 : lstMake[0].RecordCnt),
+                    iTotalDisplayRecords = (lstMake.Count == 0 ? 0 : lstMake[0].RecordCnt),
+                    aaData = lstMake
+                                    .Skip(iDisplayStart)
+                                    .Take(iDisplayLength)
+                                    .ToList()
+                };
+                return Json(result, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return Json(lstMake, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        [HttpPost]
+        public JsonResult UpdateMRP_DispatchData(mdlMRP_Dispatch objm)
+        {
+            string Result;
+            DateTime OutwardDate = new DateTime();
+            DateTime DCDate = new DateTime();
+            if (objm.DCDate == null)
+            {
+                DCDate = DateTime.ParseExact("01/01/1990", "dd/MM/yyyy", CultureInfo.InvariantCulture);
+            }
+            else
+            {
+                DCDate = DateTime.ParseExact(objm.DCDate, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+            }
+
+            if (objm.OutwardDate == null)
+            {
+                OutwardDate = DateTime.ParseExact("01/01/1990", "dd/MM/yyyy", CultureInfo.InvariantCulture);
+            }
+            else
+            {
+                OutwardDate = DateTime.ParseExact(objm.OutwardDate, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+            }
+            try
+            {
+                YearCommonDB objDB = new YearCommonDB();
+                SqlParameter[] paraColl;
+                paraColl = paraColl = new SqlParameter[]  {
+                                             new SqlParameter("@P_Operation", 7),
+                                             new SqlParameter("@P_AutoTrNo", objm.AutoTrNo),
+                                             new SqlParameter("@p_ProcessAuto",objm.ProcessAuto),
+                                             new SqlParameter("@p_DcDate", (DCDate.ToString("dd/MM/yyyy")=="01/01/1990"? SqlDateTime.Null : DCDate)),
+                                             new SqlParameter("@p_LedgerAuto",objm.PartyAuto),
+                                              new SqlParameter("@p_TCompany",objm.TransportCompany),
+                                             new SqlParameter("@p_TMode",objm.TransportMode),
+                                             new SqlParameter("@p_TRemarks",objm.TRemarks),
+                                             new SqlParameter("@p_LRNo",objm.LRNo),
+                                             new SqlParameter("@p_VehicleNo",objm.VehicleNo),
+                                             new SqlParameter("@p_OutwardDate",(OutwardDate.ToString("dd/MM/yyyy")=="01/01/1990"? SqlDateTime.Null : OutwardDate)),
+                                             new SqlParameter("@p_CreatedBy", HttpContext.Session["UserID"].ToString()),
+                };
+                Result = objDB.CRUDOperation("SP_MRP_Dispatch", paraColl);
+
+                if (objm.lstSub != null)
+                {
+                    paraColl = paraColl = new SqlParameter[]  {
+                                             new SqlParameter("@P_Operation", 9),
+                                             new SqlParameter("@AutoTrNoIDs", objm.AutoTrNoIDs),
+                    };
+                    Result = objDB.CRUDOperation("SP_MRP_Dispatch", paraColl);
+
+                    foreach (mdlMRP_DispatchSub objProd in objm.lstSub)
+                    {
+                        if (objProd.SubAutoTrNo > 0)
+                        {
+                            paraColl = paraColl = new SqlParameter[]  {
+                                             new SqlParameter("@P_Operation", 8),
+                                             new SqlParameter("@p_SubAutoTrNo", objProd.SubAutoTrNo),
+                                             new SqlParameter("@P_AutoTrNo", objm.AutoTrNo),
+                                              new SqlParameter("@p_ItemAuto", objProd.SItemAuto),
+                                             new SqlParameter("@p_EmpAuto", objProd.EmployeeAuto),
+                                             new SqlParameter("@p_WoAuto", objProd.WOAuto),
+                                             new SqlParameter("@p_WoSubAuto", objProd.WOSubAuto),
+                                             new SqlParameter("@p_RMAuto", objProd.RMAuto),
+                                             new SqlParameter("@p_Qty", objProd.Qty),
+                                             new SqlParameter("@p_Remarks", objProd.Remarks),
+                                               new SqlParameter("@p_CastingWeight", objProd.CastingWeight),
+                                               new SqlParameter("@p_TotalWeight", objProd.TotalWeight),
+                                             new SqlParameter("@p_CreatedBy", HttpContext.Session["UserID"].ToString()),
+                            };
+                            Result = objDB.CRUDOperation("SP_MRP_Dispatch", paraColl);
+                        }
+                        else
+                        {
+                            paraColl = paraColl = new SqlParameter[]  {
+                                             new SqlParameter("@P_Operation", 4),
+                                             new SqlParameter("@p_Id", SqlDbType.Int),
+                                             new SqlParameter("@p_SubAutoTrNo", objProd.SubAutoTrNo),
+                                             new SqlParameter("@P_AutoTrNo", objm.AutoTrNo),
+                                             new SqlParameter("@p_ItemAuto", objProd.SItemAuto),
+                                             new SqlParameter("@p_EmployeeAuto", objProd.EmployeeAuto),
+                                             new SqlParameter("@p_WoAuto", objProd.WOAuto),
+                                             new SqlParameter("@p_WoSubAuto", objProd.WOSubAuto),
+                                             new SqlParameter("@p_Qty", objProd.Qty),
+                                             new SqlParameter("@p_Remarks", objProd.Remarks),
+                                             new SqlParameter("@p_CastingWeight", objProd.CastingWeight),
+                                             new SqlParameter("@p_TotalWeight", objProd.TotalWeight),
+                                             new SqlParameter("@p_CreatedBy", HttpContext.Session["UserID"].ToString()),
+                            };
+                            paraColl[1].Direction = ParameterDirection.Output;
+                            Result = objDB.CRUDOperation("SP_MRP_Dispatch", paraColl);
+                            objProd.SubAutoTrNo = Convert.ToInt32(paraColl[1].Value);
+                        }
+                        if (objProd.ChekList != null)
+                        {
+                            foreach (mdlOCCheckList objSubsub in objProd.ChekList)
+                            {
+                                if (objSubsub.AutoTrNo > 0)
+                                {
+                                    paraColl = paraColl = new SqlParameter[]  {
+                                              new SqlParameter("@P_Operation", 26),
+                                             new SqlParameter("@P_AutoTrNo", objSubsub.AutoTrNo),
+                                             new SqlParameter("@p_ProcessAuto", Convert.ToInt32(objm.ProcessAuto==""?"0":objm.ProcessAuto)),
+                                             new SqlParameter("@p_CheckListAuto", objSubsub.CheckListAuto),
+                                             new SqlParameter("@p_IsChecked", objSubsub.IsChecked),
+                                             new SqlParameter("@p_CreatedBy", HttpContext.Session["UserID"].ToString()),
+                                     };
+                                }
+                                else
+                                {
+                                    paraColl = paraColl = new SqlParameter[]  {
+                                             new SqlParameter("@P_Operation", 24),
+                                             new SqlParameter("@p_MainAuto", objm.AutoTrNo),
+                                             new SqlParameter("@p_SubAuto", objProd.SubAutoTrNo),
+                                             new SqlParameter("@p_ProcessAuto", Convert.ToInt32(objm.ProcessAuto==""?"0":objm.ProcessAuto)),
+                                             new SqlParameter("@p_CheckListAuto", objSubsub.CheckListAuto),
+                                             new SqlParameter("@p_IsChecked", objSubsub.IsChecked),
+                                             new SqlParameter("@p_CreatedBy", HttpContext.Session["UserID"].ToString()),
+                                     };
+
+                                }
+                                Result = objDB.CRUDOperation("SP_MRP_Dispatch", paraColl);
+                            }
+
+                        }
+
+
+                    }
+                    if (objm.lstPackaging != null)
+                    {
+                        foreach (Packaging objProd in objm.lstPackaging)
+                        {
+                            paraColl = paraColl = new SqlParameter[]  {
+                                             new SqlParameter("@P_Operation", 19),
+                                             new SqlParameter("@AutoTrNoIDs", objm.PackagingDelete),
+                    };
+                            Result = objDB.CRUDOperation("SP_MRP_Dispatch", paraColl);
+                            if (objProd.PAutoTrNo > 0)
+                            {
+                                if (objProd.PItemAuto > 0)
+                                {
+                                    paraColl = paraColl = new SqlParameter[]  {
+                                             new SqlParameter("@P_Operation", 18),
+                                             new SqlParameter("@p_SubAutoTrNo", objProd.PAutoTrNo),
+                                             new SqlParameter("@P_AutoTrNo", objm.AutoTrNo),
+                                             new SqlParameter("@p_ItemAuto", objProd.PItemAuto),
+                                             new SqlParameter("@p_Qty", objProd.PQty),
+                                             new SqlParameter("@p_PType", objProd.PackingType),
+                                             new SqlParameter("@p_CreatedBy", HttpContext.Session["UserID"].ToString()),
+                            };
+                                }
+                            }
+                            else
+                            {
+                                if (objProd.PItemAuto > 0)
+                                {
+                                    paraColl = paraColl = new SqlParameter[]  {
+                                             new SqlParameter("@P_Operation", 16),
+                                             new SqlParameter("@p_SubAutoTrNo", objProd.PAutoTrNo),
+                                             new SqlParameter("@P_AutoTrNo", objm.AutoTrNo),
+                                             new SqlParameter("@p_ItemAuto", objProd.PItemAuto),
+                                             new SqlParameter("@p_Qty", objProd.PQty),
+                                             new SqlParameter("@p_PType", objProd.PackingType),
+                                             new SqlParameter("@p_CreatedBy", HttpContext.Session["UserID"].ToString()),
+                            };
+                                }
+                            }
+                            Result = objDB.CRUDOperation("SP_MRP_Dispatch", paraColl);
+                        }
+                    }
+                    else
+                    {
+                        paraColl = paraColl = new SqlParameter[]  {
+                                             new SqlParameter("@P_Operation", 19),
+                                             new SqlParameter("@AutoTrNoIDs", objm.PackagingDelete),
+                    };
+                        Result = objDB.CRUDOperation("SP_MRP_Dispatch", paraColl);
+                    }
+                    if (objm.lstClientDoc != null || objm.lstClientIns != null || objm.lstClientShipAtt != null)
+                    {
+                        paraColl = new SqlParameter[] {
+                                     new SqlParameter("@p_Operation", 15),
+                                     new SqlParameter("@p_AutoTrNo",Convert.ToInt32(objm.AutoTrNo)),
+                                };
+                        Result = objDB.CRUDOperation("SP_MRP_Dispatch", paraColl);
+                        if (objm.lstClientDoc != null)
+                        {
+
+                            foreach (ClientDoc objs in objm.lstClientDoc)
+                            {
+                                if (objs.OriginalDocName != null)
+                                {
+                                    paraColl = new SqlParameter[] {
+                                     new SqlParameter("@p_Operation", 11),
+                                     new SqlParameter("@p_AutoTrNo",Convert.ToInt32(objm.AutoTrNo)),
+                                     new SqlParameter("@P_Name",objs.Name),
+                                     new SqlParameter("@p_DocName",objs.DocName),
+                                     new SqlParameter("@p_EntryType",objs.EntryType),
+                                     new SqlParameter("@p_OriginalDocPath",objs.OriginalDocName),
+                                     new SqlParameter("@p_CreatedBy", HttpContext.Session["UserID"].ToString()),
+                                };
+                                }
+                                Result = objDB.CRUDOperation("SP_MRP_Dispatch", paraColl);
+                            }
+                        }
+                        if (objm.lstClientIns != null)
+                        {
+                            foreach (ClientDoc objs in objm.lstClientIns)
+                            {
+                                if (objs.OriginalDocName != null)
+                                {
+                                    paraColl = new SqlParameter[] {
+                                     new SqlParameter("@p_Operation", 11),
+                                     new SqlParameter("@p_AutoTrNo",Convert.ToInt32(objm.AutoTrNo)),
+                                     new SqlParameter("@P_Name",objs.Name),
+                                     new SqlParameter("@p_EntryType",objs.EntryType),
+                                     new SqlParameter("@p_DocName",objs.DocName),
+                                     new SqlParameter("@p_OriginalDocPath",objs.OriginalDocName),
+                                     new SqlParameter("@p_CreatedBy", HttpContext.Session["UserID"].ToString()),
+                                };
+                                    Result = objDB.CRUDOperation("SP_MRP_Dispatch", paraColl);
+                                }
+                            }
+                        }
+                        if (objm.lstClientShipAtt != null)
+                        {
+                            foreach (ClientDoc objs in objm.lstClientShipAtt)
+                            {
+                                if (objs.OriginalDocName != null)
+                                {
+                                    paraColl = new SqlParameter[] {
+                                     new SqlParameter("@p_Operation",11),
+                                     new SqlParameter("@p_AutoTrNo",Convert.ToInt32(objm.AutoTrNo)),
+                                     new SqlParameter("@P_Name",objs.Name),
+                                     new SqlParameter("@p_DocName",objs.DocName),
+                                     new SqlParameter("@p_EntryType",objs.EntryType),
+                                     new SqlParameter("@p_OriginalDocPath",objs.OriginalDocName),
+                                     new SqlParameter("@p_CreatedBy", HttpContext.Session["UserID"].ToString()),
+                                };
+                                    Result = objDB.CRUDOperation("SP_MRP_Dispatch", paraColl);
+                                }
+                            }
+                        }
+                    }
+                }
+                CDB.StockOperation("MRP_DispatchMain", Convert.ToInt32(objm.AutoTrNo), true);
+                CDB.StockOperation("MRP_DispatchMain", Convert.ToInt32(objm.AutoTrNo), false);
+                return Json(Result);
+            }
+            catch (Exception ex)
+            {
+                return Json("Error" + ex.Message.ToString());
+            }
+        }
+
+        [HttpPost]
+        public JsonResult EditData(string Id)
+        {
+            YearCommonDB objDB = new YearCommonDB();
+            string Result = "";
+            try
+            {
+                DataTable Dt = objDB.CheckTableRelation(Convert.ToInt32(Id), "MRP_DispatchMain");
+                if (Dt.Rows.Count == 0 || (Dt.Rows.Count > 0 && Dt.Rows[0][1].ToString() == ""))
+                {
+                    Result = "Sucess";
+                }
+                else
+                {
+                    Result = "You Can not Edit This Record... Record exist in " + Dt.Rows[0][1].ToString() + "...!";
+                }
+
+                return Json(Result);
+            }
+            catch (Exception ex)
+            {
+                return Json("Error" + ex.Message.ToString());
+            }
+        }
+        [HttpPost]
+        public JsonResult GetMRP_DispatchById(string Id)
+        {
+            YearCommonDB objDB = new YearCommonDB();
+            List<mdlMRP_Dispatch> lstMatClass = new List<mdlMRP_Dispatch>();
+            SqlParameter[] paraColl;
+            try
+            {
+                paraColl = new SqlParameter[] {
+                                                    new SqlParameter("@P_Operation", 5),
+                                                    new SqlParameter("@P_AutoTrNo", Id),
+                                                };
+                DataTable DT = objDB.GetDataTable("SP_MRP_Dispatch", paraColl);
+                lstMatClass = (from DataRow dr in DT.Rows
+                               select new mdlMRP_Dispatch
+                               {
+                                   AutoTrNo = Convert.ToString(dr["AutoTrNo"]),
+                                   DCNo = Convert.ToString(dr["DCNo"]),
+                                   DCDate = Convert.ToString(dr["DCDate"]),
+                                   PartyAuto = Convert.ToString(dr["PartyAuto"]),
+                                   Party = Convert.ToString(dr["LedgerName"]),
+                                   TransportMode = Convert.ToString(dr["ModeOfTransport"]),
+                                   TransportCompany = Convert.ToString(dr["TransportCompany"]),
+                                   TRemarks = Convert.ToString(dr["Remarks"]),
+                                   LRNo = Convert.ToString(dr["LRNo"]),
+                                   OutwardDate = Convert.ToString(dr["OutwardDate"]),
+                                   ProcessAuto = Convert.ToString(dr["ProcessAuto"]),
+                                   ProcessCode = Convert.ToString(dr["ProcessCode"]),
+                                   ProcessName = Convert.ToString(dr["ProcessName"]),
+                                   BillSeriesID = Convert.ToInt32(dr["BillSeriesID"]),
+                                   BillSeries = Convert.ToString(dr["BillSeries"]),
+                                   VehicleNo = Convert.ToString(dr["VehicleNo"]),
+
+
+                               }).ToList();
+
+                if (lstMatClass.Count > 0)
+                {
+                    paraColl = new SqlParameter[] {
+                                                    new SqlParameter("@P_Operation", 6),
+                                                    new SqlParameter("@P_AutoTrNo", Id),
+                                                };
+                    DataTable DT1 = objDB.GetDataTable("SP_MRP_Dispatch", paraColl);
+
+                    List<mdlMRP_DispatchSub> lstSub = new List<mdlMRP_DispatchSub>();
+                    if (DT1 != null && DT1.Rows.Count > 0)
+                    {
+
+
+                        lstSub = (from DataRow row in DT1.Rows
+                                  select new mdlMRP_DispatchSub
+                                  {
+                                      SubAutoTrNo = Convert.ToInt32(row["SubAutoTrNo"]),
+                                      MainAuto = Convert.ToInt32(row["MainAuto"]),
+                                      SItemAuto = Convert.ToString(row["ItemAuto"]),
+                                      WOAuto = Convert.ToInt32(row["WOAuto"]),
+                                      WONo = Convert.ToString(row["WONo"]),
+                                      EmployeeAuto = Convert.ToInt32(row["EmployeeAuto"]),
+                                      EmployeeName = Convert.ToString(row["EmployeeName"]),
+                                      Qty = Convert.ToString(row["Qty"]),
+                                      SItemCode = Convert.ToString(row["ItemCode"]),
+                                      SItemDescription = Convert.ToString(row["ItemName"]),
+                                      Remarks = Convert.ToString(row["Remarks"]),
+                                      WOSubAuto = Convert.ToInt32(row["WOSubAuto"]),
+                                      PendingQty = Convert.ToString(row["PendingQty"]),
+                                      CastingWeight = Convert.ToString(row["CastingWeight"]),
+                                      TotalWeight = Convert.ToString(row["TotalWeight"]),
+                                      RMAuto = Convert.ToString(row["RMAuto"]),
+                                      RMNo = Convert.ToString(row["RMNo"]),
+
+                                  }).ToList();
+
+                        foreach (mdlMRP_DispatchSub sub in lstSub)
+                        {
+                            paraColl = new SqlParameter[] {
+                                                    new SqlParameter("@P_Operation", 25),
+                                                    new SqlParameter("@P_AutoTrNo", sub.SubAutoTrNo),
+                                                };
+                            DataTable DT2 = objDB.GetDataTable("SP_MRP_Dispatch", paraColl);
+                            if (DT2 != null && DT2.Rows.Count > 0)
+                            {
+                                List<mdlOCCheckList> lstSubSub = new List<mdlOCCheckList>();
+                                lstSubSub = (from DataRow row in DT2.Rows
+                                             select new mdlOCCheckList
+                                             {
+                                                 AutoTrNo = Convert.ToInt32(row["AutoTrNo"]),
+                                                 MainAuto = Convert.ToInt32(row["MainAuto"]),
+                                                 SubAuto = Convert.ToInt32(row["SubAuto"]),
+                                                 ProcessAuto = Convert.ToInt32(row["ProcessAuto"]),
+                                                 CheckListAuto = Convert.ToInt32(row["CheckListAuto"]),
+                                                 IsChecked = Convert.ToBoolean(row["IsChecked"]),
+                                                 CheckListDesc = Convert.ToString(row["CheckListDesc"]),
+                                             }).ToList();
+
+                                sub.ChekList = lstSubSub;
+                            }
+
+                        }
+
+                    }
+                    lstMatClass[0].lstSub = lstSub;
+                    DataTable dt3 = new DataTable();
+                    if (lstMatClass.Count > 0)
+                    {
+                        paraColl = new SqlParameter[] {
+                                             new SqlParameter("@p_Operation", 17),
+                                             new SqlParameter("@p_AutoTrNo",Id),
+                                          };
+                        dt3 = objDB.GetDataTable("SP_MRP_Dispatch", paraColl);
+                    }
+                    List<Packaging> lstPackaging = new List<Packaging>();
+                    if (dt3.Rows.Count > 0)
+                    {
+                        lstPackaging = (from DataRow row in dt3.Rows
+                                        select new Packaging
+                                        {
+                                            PAutoTrNo = Convert.ToInt32(row["PAutoTrNo"]),
+                                            PItemAuto = Convert.ToInt32(row["ItemAuto"]),
+                                            PItemCode = Convert.ToString(row["ItemCode"]),
+                                            PItemName = Convert.ToString(row["ItemName"]),
+                                            PackingType = Convert.ToString(row["PackingType"]),
+                                            PQty = Convert.ToDecimal(row["Qty"]),
+                                        }).ToList();
+                    }
+                    lstMatClass[0].lstPackaging = lstPackaging;
+
+                    DataTable dt4 = new DataTable();
+                    if (lstMatClass.Count > 0)
+                    {
+                        paraColl = new SqlParameter[] {
+                                             new SqlParameter("@p_Operation", 12),
+                                             new SqlParameter("@p_AutoTrNo",Id),
+                                          };
+                        dt4 = objDB.GetDataTable("SP_MRP_Dispatch", paraColl);
+                    }
+
+                    if (dt4.Rows.Count > 0)
+                    {
+                        lstMatClass[0].lstClientDoc = (from DataRow row in dt4.Rows
+                                                       select new ClientDoc
+                                                       {
+                                                           AutoTrNo = Convert.ToInt32(row["AutoTrNo"]),
+                                                           OrderAuto = Convert.ToInt32(row["EntryAuto"]),
+                                                           Name = Convert.ToString(row["Name"]),
+                                                           EntryType = Convert.ToString(row["EntryType"]),
+                                                           DocName = Convert.ToString(row["FileName"]),
+                                                           OriginalDocName = Convert.ToString(row["DocumentPath"]),
+
+                                                       }).ToList();
+
+                    }
+                    DataTable dt5 = new DataTable();
+                    if (lstMatClass.Count > 0)
+                    {
+                        paraColl = new SqlParameter[] {
+                                             new SqlParameter("@p_Operation", 13),
+                                             new SqlParameter("@p_AutoTrNo",Id),
+                                          };
+                        dt4 = objDB.GetDataTable("SP_MRP_Dispatch", paraColl);
+                    }
+
+                    if (dt4.Rows.Count > 0)
+                    {
+                        lstMatClass[0].lstClientIns = (from DataRow row in dt4.Rows
+                                                       select new ClientDoc
+                                                       {
+                                                           AutoTrNo = Convert.ToInt32(row["AutoTrNo"]),
+                                                           OrderAuto = Convert.ToInt32(row["EntryAuto"]),
+                                                           EntryType = Convert.ToString(row["EntryType"]),
+                                                           Name = Convert.ToString(row["Name"]),
+                                                           DocName = Convert.ToString(row["FileName"]),
+                                                           OriginalDocName = Convert.ToString(row["DocumentPath"]),
+
+                                                       }).ToList();
+
+                    }
+                    DataTable dt6 = new DataTable();
+                    if (lstMatClass.Count > 0)
+                    {
+                        paraColl = new SqlParameter[] {
+                                             new SqlParameter("@p_Operation", 14),
+                                             new SqlParameter("@p_AutoTrNo",Id),
+                                          };
+                        dt4 = objDB.GetDataTable("SP_MRP_Dispatch", paraColl);
+                    }
+
+                    if (dt4.Rows.Count > 0)
+                    {
+                        lstMatClass[0].lstClientShipAtt = (from DataRow row in dt4.Rows
+                                                           select new ClientDoc
+                                                           {
+                                                               AutoTrNo = Convert.ToInt32(row["AutoTrNo"]),
+                                                               OrderAuto = Convert.ToInt32(row["EntryAuto"]),
+                                                               EntryType = Convert.ToString(row["EntryType"]),
+                                                               Name = Convert.ToString(row["Name"]),
+                                                               DocName = Convert.ToString(row["FileName"]),
+                                                               OriginalDocName = Convert.ToString(row["DocumentPath"]),
+
+                                                           }).ToList();
+
+                    }
+                }
+                return Json(lstMatClass, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return Json("Error" + ex.Message.ToString());
+            }
+        }
+        [HttpPost]
+        public JsonResult DeleteMRP_Dispatch(int Id)
+        {
+            YearCommonDB objDB = new YearCommonDB();
+            string Result = "";
+            try
+            {
+                DataTable Dt = objDB.CheckMultipleTableRelation(Convert.ToInt32(Id), "MRP_DispatchMain");
+                if (Dt.Rows.Count == 0 || (Dt.Rows.Count > 0 && Dt.Rows[0][1].ToString() == ""))
+                {
+                    SqlParameter[] paraColl = new SqlParameter[] {
+                                          new SqlParameter("@P_Operation", 2),
+                                          new SqlParameter("@P_AutoTrNo", Id),
+                };
+                    Result = objDB.CRUDOperation("SP_MRP_Dispatch", paraColl);
+                    CDB.StockOperation("MRP_DispatchMain", Id, true);
+                }
+                else
+                {
+                    Result = "You can not delete this record. Record exist in " + Dt.Rows[0][1].ToString() + "...!";
+                }
+
+                return Json(Result);
+            }
+            catch (Exception ex)
+            {
+                return Json("Error" + ex.Message.ToString());
+            }
+        }
+        [HttpPost]
+        public JsonResult EditData(int Id)
+        {
+            YearCommonDB objDB = new YearCommonDB();
+            string Result = "";
+            try
+            {
+                DataTable Dt = objDB.CheckMultipleTableRelation(Convert.ToInt32(Id), "MRP_DispatchMain");
+                if (Dt.Rows.Count == 0 || (Dt.Rows.Count > 0 && Dt.Rows[0][1].ToString() == ""))
+                {
+                    Result = "Sucess";
+                }
+                else
+                {
+                    Result = "Cannot Edit Record... Reference Exists in " + Dt.Rows[0][1].ToString();
+                }
+                return Json(Result);
+            }
+            catch (Exception ex)
+            {
+                return Json("Error" + ex.Message.ToString());
+            }
+        }
+        [HttpPost]
+        public JsonResult FileUploadProductCatalogue()
+        {
+            clsResponseMsg objResMsg = new clsResponseMsg();
+            try
+            {
+                clsDocument objDoc = new clsDocument();
+                HttpFileCollectionBase files = Request.Files;
+                HttpPostedFileBase file = files[0];
+                string OriginalDocName = file.FileName;
+                string FileWebName = Path.GetFileNameWithoutExtension(OriginalDocName) + "_" + Guid.NewGuid() + Path.GetExtension(file.FileName);
+                string FilePath = Path.Combine(this.ControllerContext.HttpContext.Server.MapPath("~/Documents/UserDoc/"), FileWebName);
+                string FileWebPath = "/Documents/UserDoc/" + FileWebName;
+                file.SaveAs(FilePath);
+
+                objDoc.FileName = OriginalDocName;
+                objDoc.FilePath = FileWebPath;
+                return Json(objDoc, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                objResMsg.Message = ex.ToString();
+                return Json(objResMsg);
+            }
+        }
+        [HttpGet]
+        public JsonResult GetItemList()
+        {
+            YearCommonDB objDB = new YearCommonDB();
+            List<mdlMRP_ItemMaster> lstItem = new List<mdlMRP_ItemMaster>();
+            try
+            {
+                int iDisplayLength = int.Parse(this.ControllerContext.HttpContext.Request["iDisplayLength"]);
+                int iDisplayStart = int.Parse(this.ControllerContext.HttpContext.Request["iDisplayStart"]);
+
+                int PageNumber = (iDisplayStart / iDisplayLength) + 1;
+                int RowsOfPage = iDisplayLength;
+
+                var Code = (Request["sSearch_1"] == null ? "" : Request["sSearch_1"]);
+                var Name = (Request["sSearch_2"] == null ? "" : Request["sSearch_2"]);
+
+                SqlParameter[] paraColl = new SqlParameter[]  {
+                                          new SqlParameter("@p_Operation",10),
+                                          new SqlParameter("@p_ItemCode", Code),
+                                          new SqlParameter("@p_ItemDescription", Name),
+                                          new SqlParameter("@p_PageNumber",PageNumber),
+                                          new SqlParameter("@p_RowsOfPage",RowsOfPage),
+                };
+                DataTable DT = objDB.GetDataTable("SP_MRP_ItemHelp", paraColl);
+
+                int no = ((PageNumber - 1) * RowsOfPage + 1);
+                lstItem = (from DataRow dr in DT.Rows
+                           select new mdlMRP_ItemMaster
+                           {
+                               SRNo = no++,
+                               RecordCnt = Convert.ToInt32(dr["TotalRecord"]),
+                               AutoTrNo = Convert.ToInt32(dr["AutoTrNo"]),
+                               ItemCode = Convert.ToString(dr["ItemCode"]),
+                               ItemName = Convert.ToString(dr["ItemName"]),
+                           }).ToList();
+
+                var result = new
+                {
+                    iTotalRecords = (lstItem.Count == 0 ? 0 : lstItem[0].RecordCnt),
+                    iTotalDisplayRecords = (lstItem.Count == 0 ? 0 : lstItem[0].RecordCnt),
+                    aaData = lstItem.ToList()
+                };
+                return Json(result, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return Json(lstItem, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        [HttpGet]
+        public JsonResult GetMRP_DispatchAuthData()
+        {
+            List<mdlMRP_Dispatch> lstMake = new List<mdlMRP_Dispatch>();
+            try
+            {
+                int iDisplayLength = int.Parse(this.ControllerContext.HttpContext.Request["iDisplayLength"]);
+                int iDisplayStart = int.Parse(this.ControllerContext.HttpContext.Request["iDisplayStart"]);
+
+                int PageNumber = (iDisplayStart / iDisplayLength) + 1;
+                int RowsOfPage = iDisplayLength;
+
+                var NO = (Request["sSearch_2"] == null ? "" : Request["sSearch_2"]);
+                var Date = (Request["sSearch_3"] == null ? "" : Request["sSearch_3"]);
+                var Name = (Request["sSearch_4"] == null ? "" : Request["sSearch_4"]);
+
+
+                SqlParameter[] paraColl = new SqlParameter[]  {
+                                          new SqlParameter("@P_Operation",20),
+                                          new SqlParameter("@p_DcNo", NO),
+                                          new SqlParameter("@p_sDcDate", Date),
+                                          new SqlParameter("@P_LedgerName", Name),
+                                          new SqlParameter("@p_PageNumber",PageNumber),
+                                          new SqlParameter("@p_RowsOfPage",RowsOfPage),
+                };
+                DataTable DT = objDB.GetDataTable("SP_MRP_Dispatch", paraColl);
+
+                int no = ((PageNumber - 1) * RowsOfPage + 1);
+                lstMake = (from DataRow dr in DT.Rows
+                           select new mdlMRP_Dispatch
+                           {
+                               SrNo = no++,
+                               RecordCnt = Convert.ToInt32(dr["TotalRecord"]),
+                               AutoTrNo = Convert.ToString(dr["AutoTrNo"]),
+                               DCNo = Convert.ToString(dr["DCNo"]),
+                               DCDate = Convert.ToString(dr["DCDate"]),
+                               Party = Convert.ToString(dr["LedgerName"]),
+                           }).ToList();
+
+                var result = new
+                {
+                    iTotalRecords = (lstMake.Count == 0 ? 0 : lstMake[0].RecordCnt),
+                    iTotalDisplayRecords = (lstMake.Count == 0 ? 0 : lstMake[0].RecordCnt),
+                    aaData = lstMake
+                                    .Skip(iDisplayStart)
+                                    .Take(iDisplayLength)
+                                    .ToList()
+                };
+                return Json(result, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return Json(lstMake, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        [HttpGet]
+        public JsonResult GetMRP_DispatchUnAuthData()
+        {
+            List<mdlMRP_Dispatch> lstMake = new List<mdlMRP_Dispatch>();
+            try
+            {
+                int iDisplayLength = int.Parse(this.ControllerContext.HttpContext.Request["iDisplayLength"]);
+                int iDisplayStart = int.Parse(this.ControllerContext.HttpContext.Request["iDisplayStart"]);
+
+                int PageNumber = (iDisplayStart / iDisplayLength) + 1;
+                int RowsOfPage = iDisplayLength;
+
+                var NO = (Request["sSearch_2"] == null ? "" : Request["sSearch_2"]);
+                var Date = (Request["sSearch_3"] == null ? "" : Request["sSearch_3"]);
+                var Name = (Request["sSearch_4"] == null ? "" : Request["sSearch_4"]);
+
+
+                SqlParameter[] paraColl = new SqlParameter[]  {
+                                          new SqlParameter("@P_Operation",21),
+                                          new SqlParameter("@p_DcNo", NO),
+                                          new SqlParameter("@p_sDcDate", Date),
+                                          new SqlParameter("@P_LedgerName", Name),
+                                          new SqlParameter("@p_PageNumber",PageNumber),
+                                          new SqlParameter("@p_RowsOfPage",RowsOfPage),
+                };
+                DataTable DT = objDB.GetDataTable("SP_MRP_Dispatch", paraColl);
+
+                int no = ((PageNumber - 1) * RowsOfPage + 1);
+                lstMake = (from DataRow dr in DT.Rows
+                           select new mdlMRP_Dispatch
+                           {
+                               SrNo = no++,
+                               RecordCnt = Convert.ToInt32(dr["TotalRecord"]),
+                               AutoTrNo = Convert.ToString(dr["AutoTrNo"]),
+                               DCNo = Convert.ToString(dr["DCNo"]),
+                               DCDate = Convert.ToString(dr["DCDate"]),
+                               Party = Convert.ToString(dr["LedgerName"]),
+                           }).ToList();
+
+                var result = new
+                {
+                    iTotalRecords = (lstMake.Count == 0 ? 0 : lstMake[0].RecordCnt),
+                    iTotalDisplayRecords = (lstMake.Count == 0 ? 0 : lstMake[0].RecordCnt),
+                    aaData = lstMake
+                                    .Skip(iDisplayStart)
+                                    .Take(iDisplayLength)
+                                    .ToList()
+                };
+                return Json(result, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return Json(lstMake, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        [HttpPost]
+        public JsonResult AuthWo(string Id)
+        {
+            YearCommonDB objDB = new YearCommonDB();
+            string Result = "";
+            try
+            {
+
+                SqlParameter[] paraColl = new SqlParameter[] {
+                                          new SqlParameter("@P_Operation", 22),
+                                          new SqlParameter("@p_AutoTrNoIDs", Id),
+                    };
+                Result = objDB.CRUDOperation("SP_MRP_Dispatch", paraColl);
+
+
+                return Json(Result);
+            }
+            catch (Exception ex)
+            {
+                return Json("Error" + ex.Message.ToString());
+            }
+        }
+        [HttpPost]
+        public JsonResult UnAuthWo(string Id)
+        {
+            YearCommonDB objDB = new YearCommonDB();
+            string Result = "";
+            try
+            {
+
+                SqlParameter[] paraColl = new SqlParameter[] {
+                                          new SqlParameter("@P_Operation", 23),
+                                          new SqlParameter("@p_AutoTrNoIDs", Id),
+                    };
+                Result = objDB.CRUDOperation("SP_MRP_Dispatch", paraColl);
+
+
+                return Json(Result);
+            }
+            catch (Exception ex)
+            {
+                return Json("Error" + ex.Message.ToString());
+            }
+        }
+
+        ///////////proccess
+        [HttpGet]
+        public JsonResult GetProcessData()
+        {
+            YearCommonDB objDB = new YearCommonDB();
+            List<mdlMRP_ProcessMaster> lstProcess = new List<mdlMRP_ProcessMaster>();
+            try
+            {
+                int iDisplayLength = int.Parse(this.ControllerContext.HttpContext.Request["iDisplayLength"]);
+                int iDisplayStart = int.Parse(this.ControllerContext.HttpContext.Request["iDisplayStart"]);
+
+                int PageNumber = (iDisplayStart / iDisplayLength) + 1;
+                int RowsOfPage = iDisplayLength;
+
+                var Code = (Request["sSearch_1"] == null ? "" : Request["sSearch_1"]);
+                var Name = (Request["sSearch_2"] == null ? "" : Request["sSearch_2"]);
+                var VendorName = (Request["sSearch_4"] == null ? "" : Request["sSearch_4"]);
+                SqlParameter[] paraColl = new SqlParameter[]  {
+                                          new SqlParameter("@p_Operation",1),
+                                          new SqlParameter("@p_ProcessCode", Code),
+                                          new SqlParameter("@p_ProcessName", Name),
+                                          new SqlParameter("@p_PageNumber",PageNumber),
+                                          new SqlParameter("@p_RowsOfPage",RowsOfPage),
+                };
+                DataTable DT = objDB.GetDataTable("SP_MRP_ProcessMasterHelp", paraColl);
+
+                int no = ((PageNumber - 1) * RowsOfPage + 1);
+                lstProcess = (from DataRow dr in DT.Rows
+                              select new mdlMRP_ProcessMaster
+                              {
+                                  SrNo = no++,
+                                  RecordCnt = Convert.ToInt32(dr["TotalRecord"]),
+                                  AutoTrNo = Convert.ToInt32(dr["AutoTrNo"]),
+                                  ProcessCode = Convert.ToString(dr["ProcessCode"]),
+                                  ProcessName = Convert.ToString(dr["ProcessName"]),
+                              }).ToList();
+
+                var result = new
+                {
+                    iTotalRecords = (lstProcess.Count == 0 ? 0 : lstProcess[0].RecordCnt),
+                    iTotalDisplayRecords = (lstProcess.Count == 0 ? 0 : lstProcess[0].RecordCnt),
+                    aaData = lstProcess
+                                    //.Skip(iDisplayStart)
+                                    //.Take(iDisplayLength)
+                                    .ToList()
+                };
+                return Json(result, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return Json(lstProcess, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        [HttpPost]
+        public JsonResult getCheklist(string Id)
+        {
+            YearCommonDB objDB = new YearCommonDB();
+            List<mdlOCCheckList> lstMatClass = new List<mdlOCCheckList>();
+            try
+            {
+                SqlParameter[] paraColl = new SqlParameter[] {
+                                                    new SqlParameter("@p_Operation", 6),
+                                                    new SqlParameter("@p_AutoTrNo", Id),
+                                                };
+                DataTable DT = objDB.GetDataTable("SP_MRP_ProcessMasterHelp", paraColl);
+                lstMatClass = (from DataRow dr in DT.Rows
+                               select new mdlOCCheckList
+                               {
+                                   AutoTrNo = 0,
+                                   MainAuto = 0,
+                                   SubAuto = 0,
+                                   ProcessAuto = 0,
+                                   CheckListAuto = Convert.ToInt32(dr["CheckListAuto"]),
+                                   CheckListDesc = Convert.ToString(dr["CheckListDesc"]),
+                                   IsChecked = false,
+                               }).ToList();
+
+                return Json(lstMatClass, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return Json("Error" + ex.Message.ToString());
+            }
+        }
+
+        [HttpPost]
+        public JsonResult PrintDispatchOrder(int Id)
+        {
+            YearCommonDB objDB = new YearCommonDB();
+            string Result = "";
+            try
+            {
+                SqlParameter[] paraColl;
+
+                string ReportHeader = "", Header = "";
+                paraColl = new SqlParameter[] {
+                                             new SqlParameter("@p_Operation",1),
+                                             new SqlParameter("@p_AutoTrNo", Id),
+                                            // new SqlParameter("@p_sign", ""),
+                                             //new SqlParameter("@P_CompanyAuto", HttpContext.Session["CompanyAuto"].ToString()),
+                };
+                DataTable dt = objDB.GetDataTable("SP_MRP_DispatchPrint", paraColl);
+
+                ReportDocument mReport = new ReportDocument();
+                if (dt.Rows.Count > 0)
+                {
+
+                    ReportHeader = "Dispatch";
+                    Header = "Dispatch";
+
+                    string RegisterCompany = HttpContext.Session["CompanyName"].ToString();
+
+
+                    mReport.Load(System.Web.HttpContext.Current.Server.MapPath(@"~/Reports/Print/PrintDeliveryChallan.rpt").ToString());
+                    mReport.SetDataSource(dt);
+
+                    mReport = objDB.SetImage(mReport);
+                    CrystalDecisions.CrystalReports.Engine.TextObject txtCompanyName;
+                    txtCompanyName = (TextObject)mReport.ReportDefinition.Sections["GroupFooterSection1"].ReportObjects["ForCompName"];
+                    txtCompanyName.Text = "For," + RegisterCompany;
+
+                    CrystalDecisions.CrystalReports.Engine.TextObject txtHeader;
+                    txtHeader = (TextObject)mReport.ReportDefinition.Sections["GroupHeaderSection3"].ReportObjects["txtRptTitle"];
+                    txtHeader.Text = ReportHeader;
+
+
+                    string PrintName = dt.Rows[0]["DCNo"].ToString() + "_" + dt.Rows[0]["PrintParty"].ToString();
+                    PrintName = PrintName.Replace("/", "-");
+                    PrintName = PrintName.Replace(" ", "_");
+                    string pdfFileName = "";
+                    pdfFileName = PrintName + ".pdf";
+                    string pdfPath = HttpContext.Server.MapPath("~/Documents/PDFFiles/" + pdfFileName);
+                    string jsPDFPath = "../Documents/PDFFiles/" + pdfFileName;
+                    mReport.ExportToDisk(ExportFormatType.PortableDocFormat, pdfPath);
+                    return Json(jsPDFPath);
+                }
+
+                return Json(Result);
+            }
+            catch (Exception ex)
+            {
+                return Json("Error" + ex.Message.ToString());
+            }
+        }
+
+
+        [HttpGet]
+        public JsonResult GetBillMasterList()
+        {
+            List<mdlBillMaster> lstGroup = new List<mdlBillMaster>();
+            try
+            {
+                int iDisplayLength = int.Parse(this.ControllerContext.HttpContext.Request["iDisplayLength"]);
+                int iDisplayStart = int.Parse(this.ControllerContext.HttpContext.Request["iDisplayStart"]);
+                int PageNumber = (iDisplayStart / iDisplayLength) + 1;
+                int RowsOfPage = iDisplayLength;
+
+
+                var EntryType = (Request["sSearch_2"] == null ? "" : Request["sSearch_2"]);
+                //var Account = (Request["sSearch_3"] == null ? "" : Request["sSearch_3"]);
+                //var Party = (Request["sSearch_4"] == null ? "" : Request["sSearch_4"]);
+                var LastNo = (Request["sSearch_5"] == null ? "" : Request["sSearch_5"]);
+
+                SqlParameter[] paraColl = new SqlParameter[]  {
+                                          new SqlParameter("@p_Operation",4),
+                                          new SqlParameter("@p_EntryType", EntryType),
+                                          //new SqlParameter("@p_LedgerName", Account),
+                                          //new SqlParameter("@p_PartyName", Party),
+                                          new SqlParameter("@p_sLastNo", LastNo),
+                                              new SqlParameter("@p_PageNumber",PageNumber),
+                                             new SqlParameter("@p_RowsOfPage",RowsOfPage),
+
+                };
+                DataTable DT = objDB.GetDataTable("SP_ACC_BillMaster", paraColl);
+                int no = ((PageNumber - 1) * RowsOfPage + 1);
+                lstGroup = (from DataRow dr in DT.Rows
+                           select new mdlBillMaster
+                           {
+                               SRNO = no++,
+                               RecordCnt = Convert.ToInt32(dr["TotalRecord"]),
+                               AutoTrNo = Convert.ToInt32(dr["AutoTrNo"]),
+                               EntryType = Convert.ToString(dr["EntryType"]),
+                               LastNo = Convert.ToDecimal(dr["LastNo"]),
+                           }).ToList();
+                var result = new
+                {
+                    iTotalRecords = (lstGroup.Count == 0 ? 0 : lstGroup[0].RecordCnt),
+                    iTotalDisplayRecords = (lstGroup.Count == 0 ? 0 : lstGroup[0].RecordCnt),
+                    aaData = lstGroup.ToList()
+                };
+                return Json(result, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return Json(lstGroup, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+    }
+}
