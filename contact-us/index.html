@@ -127,10 +127,10 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <link rel="apple-touch-icon" href="../wp-content/uploads/2020/07/cropped-Favikon-180x180.png" />
 <meta name="msapplication-TileImage" content="https://hendon.qodeinteractive.com/wp-content/uploads/2020/07/cropped-Favikon-270x270.png" />
 <script type="text/javascript">function setREVStartSize(e){
-			//window.requestAnimationFrame(function() {				 
-				window.RSIW = window.RSIW===undefined ? window.innerWidth : window.RSIW;	
-				window.RSIH = window.RSIH===undefined ? window.innerHeight : window.RSIH;	
-				try {								
+			//window.requestAnimationFrame(function() {
+				window.RSIW = window.RSIW===undefined ? window.innerWidth : window.RSIW;
+				window.RSIH = window.RSIH===undefined ? window.innerHeight : window.RSIH;
+				try {
 					var pw = document.getElementById(e.c).parentNode.offsetWidth,
 						newh;
 					pw = pw===0 || isNaN(pw) ? window.RSIW : pw;
@@ -140,31 +140,31 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 					e.thumbh = e.thumbh===undefined ? 0 : parseInt(e.thumbh);
 					e.tabhide = e.tabhide===undefined ? 0 : parseInt(e.tabhide);
 					e.thumbhide = e.thumbhide===undefined ? 0 : parseInt(e.thumbhide);
-					e.mh = e.mh===undefined || e.mh=="" || e.mh==="auto" ? 0 : parseInt(e.mh,0);		
-					if(e.layout==="fullscreen" || e.l==="fullscreen") 						
-						newh = Math.max(e.mh,window.RSIH);					
-					else{					
+					e.mh = e.mh===undefined || e.mh=="" || e.mh==="auto" ? 0 : parseInt(e.mh,0);
+					if(e.layout==="fullscreen" || e.l==="fullscreen")
+						newh = Math.max(e.mh,window.RSIH);
+					else{
 						e.gw = Array.isArray(e.gw) ? e.gw : [e.gw];
-						for (var i in e.rl) if (e.gw[i]===undefined || e.gw[i]===0) e.gw[i] = e.gw[i-1];					
+						for (var i in e.rl) if (e.gw[i]===undefined || e.gw[i]===0) e.gw[i] = e.gw[i-1];
 						e.gh = e.el===undefined || e.el==="" || (Array.isArray(e.el) && e.el.length==0)? e.gh : e.el;
 						e.gh = Array.isArray(e.gh) ? e.gh : [e.gh];
 						for (var i in e.rl) if (e.gh[i]===undefined || e.gh[i]===0) e.gh[i] = e.gh[i-1];
-											
+
 						var nl = new Array(e.rl.length),
-							ix = 0,						
-							sl;					
+							ix = 0,
+							sl;
 						e.tabw = e.tabhide>=pw ? 0 : e.tabw;
 						e.thumbw = e.thumbhide>=pw ? 0 : e.thumbw;
 						e.tabh = e.tabhide>=pw ? 0 : e.tabh;
-						e.thumbh = e.thumbhide>=pw ? 0 : e.thumbh;					
+						e.thumbh = e.thumbhide>=pw ? 0 : e.thumbh;
 						for (var i in e.rl) nl[i] = e.rl[i]<window.RSIW ? 0 : e.rl[i];
-						sl = nl[0];									
-						for (var i in nl) if (sl>nl[i] && nl[i]>0) { sl = nl[i]; ix=i;}															
-						var m = pw>(e.gw[ix]+e.tabw+e.thumbw) ? 1 : (pw-(e.tabw+e.thumbw)) / (e.gw[ix]);					
+						sl = nl[0];
+						for (var i in nl) if (sl>nl[i] && nl[i]>0) { sl = nl[i]; ix=i;}
+						var m = pw>(e.gw[ix]+e.tabw+e.thumbw) ? 1 : (pw-(e.tabw+e.thumbw)) / (e.gw[ix]);
 						newh =  (e.gh[ix] * m) + (e.tabh + e.thumbh);
 					}
 					var el = document.getElementById(e.c);
-					if (el!==null && el) el.style.height = newh+"px";					
+					if (el!==null && el) el.style.height = newh+"px";
 					el = document.getElementById(e.c+"_wrapper");
 					if (el!==null && el) {
 						el.style.height = newh+"px";
@@ -172,7 +172,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 					}
 				} catch(e){
 					console.log("Failure at Presize of Slider:" + e)
-				}					   
+				}
 			//});
 		  };</script>
 <style type="text/css" id="wp-custom-css">
@@ -242,7 +242,7 @@ top: 32px !important;
 		<li id="menu-item-1265" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-1265"><a href="404.html"><span class="qodef-menu-item-text">404 Error Page</span></a></li> -->
 		</ul></div>
 		</li>
-		
+
 		</ul> </nav>
 		</div>
 		<a itemprop="url" class="qodef-header-logo-link qodef-height--set" href="index.html" style="height:68px" rel="home">
@@ -286,87 +286,54 @@ top: 32px !important;
 <rect x="7.292" y="6.875" fill="#000" width="50" height="1" />
 <rect x="7.292" y="13.875" fill="#000" width="50" height="1" />
 </svg>
-</a> <nav class="qodef-mobile-header-navigation" role="navigation" aria-label="Mobile Menu">
-<ul id="menu-main-menu-2" class="qodef-content-grid"><li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-725 qodef-menu-item--narrow"><a href="#"><span class="qodef-menu-item-text">Home</span><span class="qodef-menu-arrow">
-<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="10px" height="10px" viewBox="0 0 10 10" enable-background="new 0 0 10 10" xml:space="preserve">
-<g><polygon points="3.39,9.042 2.769,8.259 6.848,5.025 2.768,1.74 3.395,0.961 8.449,5.031" /></g>
-</svg>
-</span></a>
-<div class="qodef-drop-down-second"><div class="qodef-drop-down-second-inner"><ul class="sub-menu">
-<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-home menu-item-870"><a href="../index.html"><span class="qodef-menu-item-text">Camden</span></a></li>
-<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-869"><a href="../kensington/index.html"><span class="qodef-menu-item-text">Kensington</span></a></li>
-<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1137"><a href="../chelsea/index.html"><span class="qodef-menu-item-text">Chelsea</span></a></li>
-<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1138"><a href="../greenwich/index.html"><span class="qodef-menu-item-text">Greenwich</span></a></li>
-<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1136"><a href="../fulham/index.html"><span class="qodef-menu-item-text">Fulham</span></a></li>
-<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1170"><a href="../lambeth/index.html"><span class="qodef-menu-item-text">Lambeth</span></a></li>
-<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-871"><a href="../southwark/index.html"><span class="qodef-menu-item-text">Southwark</span></a></li>
-<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1569"><a href="../landing/index.html"><span class="qodef-menu-item-text">Landing</span></a></li>
-</ul></div></div>
-</li>
-<li class="menu-item menu-item-type-custom menu-item-object-custom current-menu-ancestor current-menu-parent menu-item-has-children menu-item-726 qodef-menu-item--narrow"><a href="#"><span class="qodef-menu-item-text">Pages</span><span class="qodef-menu-arrow">
-<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="10px" height="10px" viewBox="0 0 10 10" enable-background="new 0 0 10 10" xml:space="preserve">
-<g><polygon points="3.39,9.042 2.769,8.259 6.848,5.025 2.768,1.74 3.395,0.961 8.449,5.031" /></g>
-</svg>
-</span></a>
-<div class="qodef-drop-down-second"><div class="qodef-drop-down-second-inner"><ul class="sub-menu">
-<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1260"><a href="../about-us/index.html"><span class="qodef-menu-item-text">About Us</span></a></li>
-<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1367"><a href="../services/index.html"><span class="qodef-menu-item-text">Services</span></a></li>
-<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1369"><a href="../get-in-touch/index.html"><span class="qodef-menu-item-text">Get In Touch</span></a></li>
-<li class="menu-item menu-item-type-post_type menu-item-object-page current-menu-item page_item page-item-1239 current_page_item menu-item-1258"><a href="index.html"><span class="qodef-menu-item-text">Contact Us</span></a></li>
-<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1368"><a href="../faq/index.html"><span class="qodef-menu-item-text">FAQ</span></a></li>
-<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1259"><a href="../coming-soon/index.html"><span class="qodef-menu-item-text">Coming Soon</span></a></li>
-<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-1261"><a href="../404.html"><span class="qodef-menu-item-text">404 Error Page</span></a></li>
-</ul></div></div>
-</li>
-<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-728 qodef-menu-item--narrow"><a href="#"><span class="qodef-menu-item-text">Property</span><span class="qodef-menu-arrow">
-<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="10px" height="10px" viewBox="0 0 10 10" enable-background="new 0 0 10 10" xml:space="preserve">
-<g><polygon points="3.39,9.042 2.769,8.259 6.848,5.025 2.768,1.74 3.395,0.961 8.449,5.031" /></g>
-</svg>
-</span></a>
-<div class="qodef-drop-down-second"><div class="qodef-drop-down-second-inner"><ul class="sub-menu">
-<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2095"><a href="../info-adjacent/index.html"><span class="qodef-menu-item-text">Property List</span></a></li>
-<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2191"><a href="../property-slider/index.html"><span class="qodef-menu-item-text">Property Slider</span></a></li>
-<li class="menu-item menu-item-type-post_type menu-item-object-property-item menu-item-1198"><a href="../property-item/project-complex/index.html"><span class="qodef-menu-item-text">Property Single</span></a></li>
-</ul></div></div>
-</li>
-<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-729 qodef-menu-item--narrow"><a href="#"><span class="qodef-menu-item-text">Apartment</span><span class="qodef-menu-arrow">
-<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="10px" height="10px" viewBox="0 0 10 10" enable-background="new 0 0 10 10" xml:space="preserve">
-<g><polygon points="3.39,9.042 2.769,8.259 6.848,5.025 2.768,1.74 3.395,0.961 8.449,5.031" /></g>
-</svg>
-</span></a>
-<div class="qodef-drop-down-second"><div class="qodef-drop-down-second-inner"><ul class="sub-menu">
-<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2193"><a href="../info-bellow/index.html"><span class="qodef-menu-item-text">Info Bellow List</span></a></li>
-<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2194"><a href="../feature-bellow/index.html"><span class="qodef-menu-item-text">Feature Bellow List</span></a></li>
-<li class="menu-item menu-item-type-post_type menu-item-object-apartment-item menu-item-1197"><a href="../apartment-item/lux-apartment/index.html"><span class="qodef-menu-item-text">Apartment Single</span></a></li>
-</ul></div></div>
-</li>
-<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-727 qodef-menu-item--narrow"><a href="#"><span class="qodef-menu-item-text">Blog</span><span class="qodef-menu-arrow">
-<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="10px" height="10px" viewBox="0 0 10 10" enable-background="new 0 0 10 10" xml:space="preserve">
-<g><polygon points="3.39,9.042 2.769,8.259 6.848,5.025 2.768,1.74 3.395,0.961 8.449,5.031" /></g>
-</svg>
-</span></a>
-<div class="qodef-drop-down-second"><div class="qodef-drop-down-second-inner"><ul class="sub-menu">
-<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1373"><a href="../blog-right-sidebar/index.html"><span class="qodef-menu-item-text">Blog Right Sidebar</span></a></li>
-<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1371"><a href="../blog-left-sidebar/index.html"><span class="qodef-menu-item-text">Blog Left Sidebar</span></a></li>
-<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1372"><a href="../blog-no-sidebar/index.html"><span class="qodef-menu-item-text">Blog No Sidebar</span></a></li>
-<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-1370"><a href="#"><span class="qodef-menu-item-text">Post Types</span><span class="qodef-menu-arrow">
-<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="10px" height="10px" viewBox="0 0 10 10" enable-background="new 0 0 10 10" xml:space="preserve">
-<g><polygon points="3.39,9.042 2.769,8.259 6.848,5.025 2.768,1.74 3.395,0.961 8.449,5.031" /></g>
-</svg>
-</span></a>
-<ul class="sub-menu">
-<li class="menu-item menu-item-type-post_type menu-item-object-post menu-item-1374"><a href="../bathroom-oasis/index.html"><span class="qodef-menu-item-text">Standard Post</span></a></li>
-<li class="menu-item menu-item-type-post_type menu-item-object-post menu-item-1379"><a href="../clever-remodel/index.html"><span class="qodef-menu-item-text">Gallery Post</span></a></li>
-<li class="menu-item menu-item-type-post_type menu-item-object-post menu-item-1375"><a href="../homes-to-inspire/index.html"><span class="qodef-menu-item-text">Quote Post</span></a></li>
-<li class="menu-item menu-item-type-post_type menu-item-object-post menu-item-1377"><a href="../pure-white-stylish/index.html"><span class="qodef-menu-item-text">Link Post</span></a></li>
-<li class="menu-item menu-item-type-post_type menu-item-object-post menu-item-1376"><a href="../warm-interior/index.html"><span class="qodef-menu-item-text">Audio Post</span></a></li>
-<li class="menu-item menu-item-type-post_type menu-item-object-post menu-item-1380"><a href="../visualize-project/index.html"><span class="qodef-menu-item-text">Video Post</span></a></li>
-<li class="menu-item menu-item-type-post_type menu-item-object-post menu-item-1378"><a href="../ultimate-design/index.html"><span class="qodef-menu-item-text">No Sidebar Post</span></a></li>
-</ul>
-</li>
-</ul></div></div>
-</li>
-</ul> </nav>
+</a>
+<nav class="qodef-mobile-header-navigation" role="navigation" aria-label="Mobile Menu">
+	<ul id="menu-main-menu-2" class="qodef-content-grid"><li class="menu-item menu-item-type-custom menu-item-object-custom current-menu-ancestor current-menu-parent menu-item-has-children menu-item-725 qodef-menu-item--narrow"><a href="../index.html"><span class="qodef-menu-item-text">Home</span><span class="qodef-menu-arrow">
+	<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="10px" height="10px" viewBox="0 0 10 10" enable-background="new 0 0 10 10" xml:space="preserve">
+	<g><polygon points="3.39,9.042 2.769,8.259 6.848,5.025 2.768,1.74 3.395,0.961 8.449,5.031" /></g>
+	</svg>
+	</span></a>
+	<!-- <div class="qodef-drop-down-second"><div class="qodef-drop-down-second-inner"><ul class="sub-menu">
+	<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-home current-menu-item page_item page-item-395 current_page_item menu-item-870"><a href="index.html"><span class="qodef-menu-item-text">Camden</span></a></li>
+	<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-869"><a href="kensington/index.html"><span class="qodef-menu-item-text">Kensington</span></a></li>
+	<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1137"><a href="chelsea/index.html"><span class="qodef-menu-item-text">Chelsea</span></a></li>
+	<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1138"><a href="greenwich/index.html"><span class="qodef-menu-item-text">Greenwich</span></a></li>
+	<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1136"><a href="fulham/index.html"><span class="qodef-menu-item-text">Fulham</span></a></li>
+	<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1170"><a href="lambeth/index.html"><span class="qodef-menu-item-text">Lambeth</span></a></li>
+	<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-871"><a href="southwark/index.html"><span class="qodef-menu-item-text">Southwark</span></a></li>
+	<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1569"><a href="landing/index.html"><span class="qodef-menu-item-text">Landing</span></a></li>
+	</ul></div></div> -->
+	</li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-726 qodef-menu-item--narrow"><a href="../about-us/index.html"><span class="qodef-menu-item-text">About Us</span><span class="qodef-menu-arrow">
+	<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="10px" height="10px" viewBox="0 0 10 10" enable-background="new 0 0 10 10" xml:space="preserve">
+	<g><polygon points="3.39,9.042 2.769,8.259 6.848,5.025 2.768,1.74 3.395,0.961 8.449,5.031" /></g>
+	</svg>
+	</span></a>
+	<!-- <div class="qodef-drop-down-second"><div class="qodef-drop-down-second-inner"><ul class="sub-menu">
+	<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1260"><a href="about-us/index.html"><span class="qodef-menu-item-text">About Us</span></a></li>
+	<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1367"><a href="services/index.html"><span class="qodef-menu-item-text">Services</span></a></li>
+	<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1369"><a href="get-in-touch/index.html"><span class="qodef-menu-item-text">Get In Touch</span></a></li>
+	<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1258"><a href="contact-us/index.html"><span class="qodef-menu-item-text">Contact Us</span></a></li>
+	<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1368"><a href="faq/index.html"><span class="qodef-menu-item-text">FAQ</span></a></li>
+	<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1259"><a href="coming-soon/index.html"><span class="qodef-menu-item-text">Coming Soon</span></a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-1261"><a href="404.html"><span class="qodef-menu-item-text">404 Error Page</span></a></li>
+	</ul></div></div> -->
+	</li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-728 qodef-menu-item--narrow"><a href="../property-item/project-complex/index.html"><span class="qodef-menu-item-text">Apartments</span><span class="qodef-menu-arrow">
+	<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="10px" height="10px" viewBox="0 0 10 10" enable-background="new 0 0 10 10" xml:space="preserve">
+	<g><polygon points="3.39,9.042 2.769,8.259 6.848,5.025 2.768,1.74 3.395,0.961 8.449,5.031" /></g>
+	</svg>
+	</span></a>
+
+	</li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-729 qodef-menu-item--narrow"><a href="index.html">Contact Us<span class="qodef-menu-arrow">
+	<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="10px" height="10px" viewBox="0 0 10 10" enable-background="new 0 0 10 10" xml:space="preserve">
+	<g><polygon points="3.39,9.042 2.769,8.259 6.848,5.025 2.768,1.74 3.395,0.961 8.449,5.031" /></g>
+	</svg>
+	</span></a>
+	</li>
+
+	</ul> </nav>
 </div>
 </header> <div id="qodef-page-outer">
 <div id="qodef-page-inner" class="qodef-content-full-width"><main id="qodef-page-content" class="qodef-grid qodef-layout--template ">
@@ -487,7 +454,7 @@ Request a visit </h2>
 <section class="elementor-section elementor-top-section elementor-element elementor-element-7524bf8 elementor-section-full_width qodef-elementor-content-grid elementor-section-height-default elementor-section-height-default" data-id="7524bf8" data-element_type="section">
 <div class="elementor-container elementor-column-gap-default">
 <div class="elementor-row">
-<div class="elementor-column elementor-col-25 elementor-top-column elementor-element elementor-element-98712d0" data-id="98712d0" data-element_type="column">
+<!-- <div class="elementor-column elementor-col-25 elementor-top-column elementor-element elementor-element-98712d0" data-id="98712d0" data-element_type="column">
 <div class="elementor-column-wrap elementor-element-populated">
 <div class="elementor-widget-wrap">
 <div class="elementor-element elementor-element-a4ad6cd elementor-widget elementor-widget-heading" data-id="a4ad6cd" data-element_type="widget" data-widget_type="heading.default">
@@ -514,7 +481,7 @@ Request a visit </h2>
 </div>
 </div>
 </div>
-</div>
+</div> -->
 <div class="elementor-column elementor-col-25 elementor-top-column elementor-element elementor-element-7fc73b2" data-id="7fc73b2" data-element_type="column">
 <div class="elementor-column-wrap elementor-element-populated">
 <div class="elementor-widget-wrap">
@@ -531,13 +498,13 @@ Request a visit </h2>
 <div class="elementor-element elementor-element-e0801e8 elementor-widget elementor-widget-text-editor" data-id="e0801e8" data-element_type="widget" data-widget_type="text-editor.default">
 <div class="elementor-widget-container">
 <div class="elementor-text-editor elementor-clearfix">
-<span style="color: #615e5e;"><a style="color: #615e5e;" href="../cdn-cgi/l/email-protection.html#aac2cfc4cec5c4eadbc5cecfc3c4decfd8cbc9dec3dccf84c9c5c7"><span class="__cf_email__" data-cfemail="f59d909b919a9bb5849a91909c9b8190879496819c8390db969a98">[email&#160;protected]</span> </a></span> </div>
+<span style="color: #615e5e;"><a style="color: #615e5e;" ><span>Somanth@gmail.com</span> </a></span> </div>
 </div>
 </div>
 <div class="elementor-element elementor-element-bde253b elementor-widget elementor-widget-text-editor" data-id="bde253b" data-element_type="widget" data-widget_type="text-editor.default">
 <div class="elementor-widget-container">
  <div class="elementor-text-editor elementor-clearfix">
-<span style="color: #615e5e;"><a style="color: #615e5e;" href="tel:00123456789">+ 00 123 456 789</a></span> </div>
+<span style="color: #615e5e;"><a style="color: #615e5e;" href="tel:00123456789">8511116776</a></span> </div>
 </div>
 </div>
 </div>
@@ -559,19 +526,19 @@ Request a visit </h2>
 <div class="elementor-element elementor-element-ad3b201 elementor-widget elementor-widget-text-editor" data-id="ad3b201" data-element_type="widget" data-widget_type="text-editor.default">
 <div class="elementor-widget-container">
 <div class="elementor-text-editor elementor-clearfix">
-<span style="color: #615e5e;"><a style="color: #615e5e;" href="../cdn-cgi/l/email-protection.html#751d101b111a1b35041a11101c1b0110071416011c03105b161a18"><span class="__cf_email__" data-cfemail="3f575a515b50517f4e505b5a56514b5a4d5e5c4b56495a115c5052">[email&#160;protected]</span> </a></span> </div>
 </div>
+<span style="color: #615e5e;"><a style="color: #615e5e;" ><span>Somanth@gmail.com</span> </a></span> </div>
 </div>
 <div class="elementor-element elementor-element-12ad040 elementor-widget elementor-widget-text-editor" data-id="12ad040" data-element_type="widget" data-widget_type="text-editor.default">
 <div class="elementor-widget-container">
 <div class="elementor-text-editor elementor-clearfix">
-<span style="color: #615e5e;"><a style="color: #615e5e;" href="tel:00123456789">+ 00 123 456 789</a></span> </div>
+<span style="color: #615e5e;"><a style="color: #615e5e;" href="tel:00123456789">8511116776</a></span> </div>
 </div>
 </div>
 </div>
 </div>
 </div>
-<div class="elementor-column elementor-col-25 elementor-top-column elementor-element elementor-element-673bba8" data-id="673bba8" data-element_type="column">
+<!-- <div class="elementor-column elementor-col-25 elementor-top-column elementor-element elementor-element-673bba8" data-id="673bba8" data-element_type="column">
 <div class="elementor-column-wrap elementor-element-populated">
 <div class="elementor-widget-wrap">
 <div class="elementor-element elementor-element-b662197 elementor-widget elementor-widget-heading" data-id="b662197" data-element_type="widget" data-widget_type="heading.default">
@@ -598,7 +565,7 @@ Request a visit </h2>
 </div>
 </div>
 </div>
-</div>
+</div> -->
 </div>
 </div>
 </section>
@@ -626,8 +593,8 @@ Request a visit </h2>
 <div class="qodef-grid-inner clear">
 <div class="qodef-grid-item">
 <div id="text-2" class="widget widget_text" data-area="footer_top_area_column_1"><h5 class="qodef-widget-title">Contact</h5> <div class="textwidget"><p><span style="display: block; color: #fff; padding-bottom: 9px;">Find out all the ways to enjoy luxury residential life around the world.</span></p>
-<p><span style="color: #d7926b;">A</span>: <a style="display: inline-block; padding-bottom: 10px;" href="https://www.google.com/maps/place/Seestrasse+21,+8002+Zürich,+Switzerland/@47.363765,8.529405,17z/data=!3m1!4b1!4m5!3m4!1s0x479009f9149bc8ab:0x80b507c3ea8d2191!8m2!3d47.363765!4d8.5315937" target="_blank" rel="noopener">SeeStrasse 21, Zurich, CH</a><br />
-<span style="color: #d7926b;">T</span>: <a href="tel:99411787014">99 4 11 78 70 14</a></p>
+<p><span style="color: #d7926b;">A</span>: <a style="display: inline-block; padding-bottom: 10px;" href="https://www.google.com/maps/place/Seestrasse+21,+8002+Zürich,+Switzerland/@47.363765,8.529405,17z/data=!3m1!4b1!4m5!3m4!1s0x479009f9149bc8ab:0x80b507c3ea8d2191!8m2!3d47.363765!4d8.5315937" target="_blank" rel="noopener">Ashok Bhai</a><br />
+<span style="color: #d7926b;">T</span>: <a href="tel:8511116776">8511116776</a></p>
 </div>
 </div><div id="hendon_core_separator-8" class="widget widget_hendon_core_separator" data-area="footer_top_area_column_1"><div class="qodef-shortcode qodef-m  qodef-separator clear ">
 <div class="qodef-m-line" style="width: 1px;border-bottom-width: 1px;margin-top: 10px"></div>
@@ -864,11 +831,11 @@ var qodefGlobal = {"vars":{"adminBarHeight":0,"topAreaHeight":0,"restUrl":"https
 							$zopim(function(){
 								var isChatEnabled = sessionStorage.getItem("qodeChatEnabled"),
 									appearingTime = 15000;
-								
+
 								if(isChatEnabled !== "no" && window.innerWidth > 1024) {
 									setTimeout(function(){
 										$zopim.livechat.window.show();
-										
+
 										 $zopim.livechat.window.onHide(function(){
 										    sessionStorage.setItem("qodeChatEnabled", "no");
 										 });
@@ -931,7 +898,7 @@ var qodefElementorGlobal = {"vars":{"elementorSectionHandler":[]}};
 						allowHTML5AutoPlayOnAndroid:true
 					},
 			});
-			
+
 		}} // End of RevInitScript
 
 		if (window.RS_MODULES.checkMinimal!==undefined) { window.RS_MODULES.checkMinimal();};
