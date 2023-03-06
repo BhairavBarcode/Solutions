@@ -9,6 +9,7 @@
       <meta name="viewport" content="width=device-width, initial-scale=1">
       <link rel="profile" href="https://gmpg.org/xfn/11">
       <title>Betel</title>
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
       <link rel="stylesheet" id="siteground-optimizer-combined-css-4bf921c48c84d99d3532da7523a26489" href="wp-content/uploads/sites/4/siteground-optimizer-assets/siteground-optimizer-combined-css-4bf921c48c84d99d3532da7523a26489.css" media="all" />
       <meta name='robots' content='max-image-preview:large' />
       <link rel="alternate" type="application/rss+xml" title="Betel &raquo; Feed" href="feed/index.html" />
@@ -37,6 +38,7 @@
       <link rel='shortlink' href='index.html' />
       <link rel="alternate" type="application/json+oembed" href="wp-json/oembed/1.0/embed85f9.json?url=https%3A%2F%2Fdemo2.strongtheme.com%2Fvitpro%2F" />
       <link rel="alternate" type="text/xml+oembed" href="wp-json/oembed/1.0/embed1727?url=https%3A%2F%2Fdemo2.strongtheme.com%2Fvitpro%2F&amp;format=xml" />
+      <script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
    </head>
    <body style="overflow-x: hidden;" class="home page-template page-template-elementor_header_footer page page-id-7 elementor-default elementor-template-full-width elementor-kit-3 elementor-page elementor-page-7">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 0 0" width="0" height="0" focusable="false" role="none" style="visibility: hidden; position: absolute; left: -9999px; overflow: hidden;" >
@@ -172,8 +174,8 @@
                            <nav migration_allowed="1" migrated="0" role="navigation" class="elementor-nav-menu--main elementor-nav-menu__container elementor-nav-menu--layout-horizontal e--pointer-underline e--animation-fade">
                               <ul id="menu-1-088f6e3" class="elementor-nav-menu">
                                  <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-home current-menu-item page_item page-item-7 current_page_item menu-item-1170"><a href="index.html" aria-current="page" class="elementor-item elementor-item-active">Home</a></li>
-                                 <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1169"><a href="#" class="elementor-item">About</a></li>
-                                 <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1167"><a href="#" class="elementor-item">Product</a></li>
+                                 <!-- <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1169"><a href="#" class="elementor-item">About</a></li> -->
+                                 <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1167"><a href="PRODUCT.HTML" class="elementor-item">Product</a></li>
                                  <!-- <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-1171">
                                     <a class="elementor-item">Page</a>
                                     <ul class="sub-menu elementor-nav-menu--dropdown">
@@ -185,7 +187,7 @@
                                     </ul>
                                  </li> -->
                                  <!-- <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1165"><a href="news-media/index.html" class="elementor-item">News &#038; Media</a></li> -->
-                                 <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1164"><a href="#" class="elementor-item">Contact Us</a></li>
+                                 <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1164"><a href="contact-us/index.html" class="elementor-item">Contact Us</a></li>
                               </ul>
                            </nav>
                            <div class="elementor-menu-toggle" role="button" tabindex="0" aria-label="Menu Toggle" aria-expanded="false"> <i aria-hidden="true" role="presentation" class="fa fa-bars"></i>
@@ -194,8 +196,8 @@
                            <nav class="elementor-nav-menu--dropdown elementor-nav-menu__container" role="navigation" aria-hidden="true">
                               <ul id="menu-2-088f6e3" class="elementor-nav-menu">
                                  <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-home current-menu-item page_item page-item-7 current_page_item menu-item-1170"><a href="index.html" aria-current="page" class="elementor-item elementor-item-active" tabindex="-1">Home</a></li>
-                                 <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1169"><a href="#" class="elementor-item" tabindex="-1">About</a></li>
-                                 <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1167"><a href="#" class="elementor-item" tabindex="-1">Product</a></li>
+                                 <!-- <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1169"><a href="#" class="elementor-item" tabindex="-1">About</a></li> -->
+                                 <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1167"><a href="PRODUCT.HTML" class="elementor-item" tabindex="-1">Product</a></li>
                                  <!-- <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-1171">
                                     <a class="elementor-item" tabindex="-1">Page</a>
                                     <ul class="sub-menu elementor-nav-menu--dropdown">
@@ -207,7 +209,7 @@
                                     </ul>
                                  </li> -->
                                  <!-- <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1165"><a href="news-media/index.html" class="elementor-item" tabindex="-1">News &#038; Media</a></li> -->
-                                 <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1164"><a href="#" class="elementor-item" tabindex="-1">Contact Us</a></li>
+                                 <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1164"><a href="contact-us/index.html" class="elementor-item" tabindex="-1">Contact Us</a></li>
                               </ul>
                            </nav>
                         </div>
@@ -219,7 +221,7 @@
       </div>
       <div data-elementor-type="wp-page" data-elementor-id="7" class="elementor elementor-7">
          <section class="elementor-section elementor-top-section elementor-element elementor-element-edfe34b elementor-section-boxed elementor-section-height-default elementor-section-height-default" style="background-color: transparent;
-         background-image: linear-gradient(160deg, #42F5C9 0%, #a2CB7D 100%);" data-id="edfe34b" data-element_type="section" data-settings="{&quot;background_background&quot;:&quot;gradient&quot;}">
+         background-image: url(Images/UUUNew.png); background-repeat: no-repeat; " data-id="edfe34b" data-element_type="section" data-settings="{&quot;background_background&quot;:&quot;gradient&quot;}">
             <div class="elementor-background-overlay"></div>
             <div class="elementor-container elementor-column-gap-default">
                <div class="elementor-column elementor-col-100 elementor-top-column elementor-element elementor-element-c6112ac" data-id="c6112ac" data-element_type="column">
@@ -237,13 +239,13 @@
                                  </div>
                                  <div class="elementor-element elementor-element-1668a27 elementor-invisible elementor-widget elementor-widget-heading" data-id="1668a27" data-element_type="widget" data-settings="{&quot;_animation&quot;:&quot;fadeInUp&quot;,&quot;_animation_delay&quot;:400}" data-widget_type="heading.default">
                                     <div class="elementor-widget-container">
-                                       <h5 class="elementor-heading-title elementor-size-default">From Our Hearts...To Your Mouth.</h5>
+                                       <h5 class="elementor-heading-title elementor-size-default">The Gourmet Mukhwas</h5>
                                     </div>
                                  </div>
                                  <div class="elementor-element elementor-element-ddc124a elementor-invisible elementor-widget elementor-widget-eael-creative-button" data-id="ddc124a" data-element_type="widget" data-settings="{&quot;_animation&quot;:&quot;fadeInUp&quot;,&quot;_animation_delay&quot;:600}" data-widget_type="eael-creative-button.default">
                                     <div class="elementor-widget-container">
                                        <div class="eael-creative-button-wrapper">
-                                          <a class="eael-creative-button eael-creative-button--winona" href="#" data-text="Shop Now">
+                                          <a class="eael-creative-button eael-creative-button--winona" href="PRODUCT.HTML" data-text="Shop Now">
                                              <div class="creative-button-inner"> <span class="eael-creative-button-icon-left"><i aria-hidden="true" class="fas fa-shopping-bag"></i></span> <span class="cretive-button-text">Order Now</span></div>
                                           </a>
                                        </div>
@@ -251,8 +253,10 @@
                                  </div>
                               </div>
                            </div>
+                           <!-- <img src="Images/722-removebg-preview.png"  style="position: absolute;" class="" alt="" loading="lazy"/> -->
                            <div class="elementor-column elementor-col-50 elementor-inner-column elementor-element elementor-element-e08e33c" data-id="e08e33c" data-element_type="column">
                               <div class="elementor-widget-wrap elementor-element-populated">
+                                   
                                  <div class="elementor-element elementor-element-3b4dfa9 elementor-invisible elementor-widget elementor-widget-image" data-id="3b4dfa9" data-element_type="widget" data-settings="{&quot;_animation&quot;:&quot;fadeIn&quot;,&quot;_animation_delay&quot;:200}" data-widget_type="image.default">
                                    <img src="Images/SRJ_0223-removebg.png"  style="max-width:80vw; position: relative;bottom: 0;right: 300px;" class="" alt="" loading="lazy"/>
                                  </div>
@@ -264,7 +268,7 @@
                </div>
             </div>
          </section>
-         <section class="elementor-section elementor-top-section elementor-element elementor-element-48031d2 elementor-section-boxed elementor-section-height-default elementor-section-height-default" data-id="48031d2" data-element_type="section">
+         <!-- <section class="elementor-section elementor-top-section elementor-element elementor-element-48031d2 elementor-section-boxed elementor-section-height-default elementor-section-height-default" data-id="48031d2" data-element_type="section">
             <div class="elementor-container elementor-column-gap-default">
                <div class="elementor-column elementor-col-100 elementor-top-column elementor-element elementor-element-26cdbeb" data-id="26cdbeb" data-element_type="column">
                   <div class="elementor-widget-wrap elementor-element-populated">
@@ -292,7 +296,7 @@
                   </div>
                </div>
             </div>
-         </section>
+         </section> -->
          <section class="elementor-section elementor-top-section elementor-element elementor-element-51501ea elementor-section-boxed elementor-section-height-default elementor-section-height-default" data-id="51501ea" data-element_type="section">
             <div class="elementor-background-overlay"></div>
             <div class="elementor-container elementor-column-gap-default">
@@ -421,12 +425,26 @@
                                     <div class="elementor-widget-container"> <img width="900" style="width: 100%;" height="802" src="Images/11.png" class="attachment-full size-full wp-image-327 HEffect" alt="" loading="lazy"  sizes="(max-width: 900px) 100vw, 900px" /></div>
                                  </div>
                                  <div class="elementor-element elementor-element-4de8fdd elementor-invisible elementor-widget elementor-widget-image" data-id="4de8fdd" data-element_type="widget" data-settings="{&quot;_animation&quot;:&quot;fadeInUp&quot;,&quot;_animation_delay&quot;:300}" data-widget_type="image.default">
-                                    <div class="elementor-widget-container"> <img width="800" height="660" src="Images/11.png" class="attachment-large size-large wp-image-346 HEffect" alt="" loading="lazy" srcset="https://demo2.strongtheme.com/vitpro/wp-content/uploads/sites/4/2021/07/vithome022.png 900w, https://demo2.strongtheme.com/vitpro/wp-content/uploads/sites/4/2021/07/vithome022-300x247.png 300w, https://demo2.strongtheme.com/vitpro/wp-content/uploads/sites/4/2021/07/vithome022-768x633.png 768w, https://demo2.strongtheme.com/vitpro/wp-content/uploads/sites/4/2021/07/vithome022-800x660.png 800w" sizes="(max-width: 800px) 100vw, 800px" /></div>
+                       
+                          <!-- <label> <b>Qty : </b> </label> -->
+                          <center>
+                                 <select name="cars" disabled="disabled" class="form-control" id="cars1" style="width: 200px !important; border-radius: 25px; align-items: center; text-align: center;">
+                                    <!-- <option value="250">250g</option> -->
+                                    <option value="500">500g</option>
+                                    <!-- <option value="mercedes">Mercedes</option>
+                                    <option value="audi">Audi</option> -->
+                                  </select>
+                                  </center>
+                                 
+                              
+                                  <b style="margin-top: 10px;"><label id="price1"></label></b>
                                  </div>
+                                    <!-- <div class="elementor-widget-container"> <img width="800" height="660" src="Images/11.png" class="attachment-large size-large wp-image-346 HEffect" alt="" loading="lazy" srcset="https://demo2.strongtheme.com/vitpro/wp-content/uploads/sites/4/2021/07/vithome022.png 900w, https://demo2.strongtheme.com/vitpro/wp-content/uploads/sites/4/2021/07/vithome022-300x247.png 300w, https://demo2.strongtheme.com/vitpro/wp-content/uploads/sites/4/2021/07/vithome022-768x633.png 768w, https://demo2.strongtheme.com/vitpro/wp-content/uploads/sites/4/2021/07/vithome022-800x660.png 800w" sizes="(max-width: 800px) 100vw, 800px" /></div> -->
+                              
                                  <div class="elementor-element elementor-element-0871446 elementor-invisible elementor-widget elementor-widget-eael-creative-button" data-id="0871446" data-element_type="widget" data-settings="{&quot;_animation&quot;:&quot;fadeInUp&quot;,&quot;_animation_delay&quot;:600}" data-widget_type="eael-creative-button.default">
                                     <div class="elementor-widget-container">
                                        <div class="eael-creative-button-wrapper">
-                                          <a class="eael-creative-button eael-creative-button--winona" style="background-color: #000000;" href="#" data-text="Buy Now">
+                                          <a class="eael-creative-button eael-creative-button--winona" style="background-color: #000000;" href="PRODUCT.HTML" data-text="Buy Now">
                                              <div class="creative-button-inner"> <span style="color: #fff;" class="cretive-button-text">Buy Now</span></div>
                                           </a>
                                        </div>
@@ -439,13 +457,28 @@
                                  <div class="elementor-element elementor-element-cd8edc1 elementor-invisible elementor-widget elementor-widget-image" data-id="cd8edc1" data-element_type="widget" data-settings="{&quot;_animation&quot;:&quot;fadeInUp&quot;,&quot;_animation_delay&quot;:200}" data-widget_type="image.default">
                                     <div class="elementor-widget-container"> <img width="900" style="width: 78%;" height="802" src="Images/12.png" class="attachment-full size-full wp-image-326 HEffect" alt="" loading="lazy"  sizes="(max-width: 900px) 100vw, 900px" /></div>
                                  </div>
-                                 <div class="elementor-element elementor-element-352492b elementor-invisible elementor-widget elementor-widget-image" data-id="352492b" data-element_type="widget" data-settings="{&quot;_animation&quot;:&quot;fadeInUp&quot;,&quot;_animation_delay&quot;:300}" data-widget_type="image.default">
+                                 <div class="elementor-element elementor-element-4de8fdd elementor-invisible elementor-widget elementor-widget-image" data-id="4de8fdd" data-element_type="widget" data-settings="{&quot;_animation&quot;:&quot;fadeInUp&quot;,&quot;_animation_delay&quot;:300}" data-widget_type="image.default">
+                       
+                                    <!-- <label> <b>Qty : </b> </label> -->
+                                    <center>
+                                           <select disabled="disabled"  name="cars" class="form-control" id="cars" style="width: 200px !important; border-radius: 25px; align-items: center; text-align: center;">
+                                              <option value="250">250g</option>
+                                              <option value="500">500g</option>
+                                              <!-- <option value="mercedes">Mercedes</option>
+                                              <option value="audi">Audi</option> -->
+                                            </select>
+                                            </center>
+                                           
+                                        
+                                            <b style="margin-top: 10px;"><label id="price">₹ 180</label></b>
+                                           </div>
+                                 <!-- <div class="elementor-element elementor-element-352492b elementor-invisible elementor-widget elementor-widget-image" data-id="352492b" data-element_type="widget" data-settings="{&quot;_animation&quot;:&quot;fadeInUp&quot;,&quot;_animation_delay&quot;:300}" data-widget_type="image.default">
                                     <div class="elementor-widget-container"> <img width="800" height="660" src="Images/12.png" class="attachment-large size-large wp-image-346 HEffect" alt="" loading="lazy" srcset="https://demo2.strongtheme.com/vitpro/wp-content/uploads/sites/4/2021/07/vithome022.png 900w, https://demo2.strongtheme.com/vitpro/wp-content/uploads/sites/4/2021/07/vithome022-300x247.png 300w, https://demo2.strongtheme.com/vitpro/wp-content/uploads/sites/4/2021/07/vithome022-768x633.png 768w, https://demo2.strongtheme.com/vitpro/wp-content/uploads/sites/4/2021/07/vithome022-800x660.png 800w" sizes="(max-width: 800px) 100vw, 800px" /></div>
-                                 </div>
+                                 </div> -->
                                  <div class="elementor-element elementor-element-b246689 elementor-invisible elementor-widget elementor-widget-eael-creative-button" data-id="b246689" data-element_type="widget" data-settings="{&quot;_animation&quot;:&quot;fadeInUp&quot;,&quot;_animation_delay&quot;:600}" data-widget_type="eael-creative-button.default">
                                     <div class="elementor-widget-container">
                                        <div class="eael-creative-button-wrapper">
-                                          <a class="eael-creative-button eael-creative-button--winona" style="background-color: #000000;" href="#" data-text="Buy Now">
+                                          <a class="eael-creative-button eael-creative-button--winona" style="background-color: #000000;" href="PRODUCT.HTML" data-text="Buy Now">
                                              <div class="creative-button-inner"> <span style="color: #fff;" class="cretive-button-text">Buy Now</span></div>
                                           </a>
                                        </div>
@@ -603,7 +636,7 @@
                </div>
             </div>
          </section>
-         <section class="elementor-section elementor-top-section elementor-element elementor-element-ffc3bb1 elementor-section-boxed elementor-section-height-default elementor-section-height-default" data-id="ffc3bb1" data-element_type="section" data-settings="{&quot;background_background&quot;:&quot;classic&quot;}">
+         <!-- <section class="elementor-section elementor-top-section elementor-element elementor-element-ffc3bb1 elementor-section-boxed elementor-section-height-default elementor-section-height-default" data-id="ffc3bb1" data-element_type="section" data-settings="{&quot;background_background&quot;:&quot;classic&quot;}">
             <div class="elementor-background-overlay"></div>
             <div class="elementor-container elementor-column-gap-default">
                <div class="elementor-column elementor-col-100 elementor-top-column elementor-element elementor-element-5be1fc4" data-id="5be1fc4" data-element_type="column">
@@ -701,7 +734,7 @@
                   </div>
                </div>
             </div>
-         </section>
+         </section> -->
          <!-- <section class="elementor-section elementor-top-section elementor-element elementor-element-2132bf5 elementor-section-height-min-height elementor-section-boxed elementor-section-height-default elementor-section-items-middle" data-id="2132bf5" data-element_type="section" data-settings="{&quot;background_background&quot;:&quot;classic&quot;}">
             <div class="elementor-background-overlay"></div>
             <div class="elementor-container elementor-column-gap-default">
@@ -961,7 +994,25 @@
                               <div class="elementor-widget-wrap elementor-element-populated">
                                  <div class="elementor-element elementor-element-6761dad elementor-shape-rounded elementor-grid-0 e-grid-align-center elementor-invisible elementor-widget elementor-widget-social-icons" data-id="6761dad" data-element_type="widget" data-settings="{&quot;_animation&quot;:&quot;fadeInUp&quot;,&quot;_animation_delay&quot;:400}" data-widget_type="social-icons.default">
                                     <div class="elementor-widget-container">
-                                       <div class="elementor-social-icons-wrapper elementor-grid"> <span class="elementor-grid-item"> <a class="elementor-icon elementor-social-icon elementor-social-icon-facebook-f elementor-repeater-item-bf8c378" target="_blank"> <span class="elementor-screen-only">Facebook-f</span> <i class="fab fa-facebook-f"></i> </a> </span> <span class="elementor-grid-item"> <a class="elementor-icon elementor-social-icon elementor-social-icon-twitter elementor-repeater-item-0bc0e5a" target="_blank"> <span class="elementor-screen-only">Twitter</span> <i class="fab fa-twitter"></i> </a> </span> <span class="elementor-grid-item"> <a class="elementor-icon elementor-social-icon elementor-social-icon-youtube elementor-repeater-item-3659e90" target="_blank"> <span class="elementor-screen-only">Youtube</span> <i class="fab fa-youtube"></i> </a> </span> <span class="elementor-grid-item"> <a class="elementor-icon elementor-social-icon elementor-social-icon-instagram elementor-repeater-item-ce4be30" target="_blank"> <span class="elementor-screen-only">Instagram</span> <i class="fab fa-instagram"></i> </a> </span> <span class="elementor-grid-item"> <a class="elementor-icon elementor-social-icon elementor-social-icon-linkedin-in elementor-repeater-item-d3e4800" target="_blank"> <span class="elementor-screen-only">Linkedin-in</span> <i class="fab fa-linkedin-in"></i> </a> </span> <span class="elementor-grid-item"> <a class="elementor-icon elementor-social-icon elementor-social-icon-quora elementor-repeater-item-2bbaf43" target="_blank"> <span class="elementor-screen-only">Quora</span> <i class="fab fa-quora"></i> </a> </span></div>
+                                       <div class="elementor-social-icons-wrapper elementor-grid"> 
+                                          <!-- <span class="elementor-grid-item"> 
+                                          <a class="elementor-icon elementor-social-icon elementor-social-icon-facebook-f elementor-repeater-item-bf8c378" target="_blank">
+                                        <span class="elementor-screen-only">Facebook-f</span> <i class="fab fa-facebook-f"></i> </a> 
+                                       </span>  -->
+                                       <!-- <span class="elementor-grid-item"> <a class="elementor-icon elementor-social-icon elementor-social-icon-twitter elementor-repeater-item-0bc0e5a" target="_blank"> 
+                                          <span class="elementor-screen-only">Twitter</span> <i class="fab fa-twitter"></i> </a> </span> -->
+                                           <!-- <span class="elementor-grid-item"> 
+                                             <a class="elementor-icon elementor-social-icon elementor-social-icon-youtube elementor-repeater-item-3659e90" target="_blank"> <span class="elementor-screen-only">Youtube</span> <i class="fab fa-youtube"></i> </a> 
+                                          </span>  -->
+                                       <span class="elementor-grid-item"> <a href="https://www.instagram.com/betel_bites/" class="elementor-icon elementor-social-icon elementor-social-icon-instagram elementor-repeater-item-ce4be30" target="_blank">
+                                        <span class="elementor-screen-only">Instagram</span> <i class="fab fa-instagram"></i> </a> </span> 
+                                        <!-- <span class="elementor-grid-item"> 
+                                       <a class="elementor-icon elementor-social-icon elementor-social-icon-linkedin-in elementor-repeater-item-d3e4800" target="_blank"> 
+                                          <span class="elementor-screen-only">Linkedin-in</span> <i class="fab fa-linkedin-in"></i> </a> </span> -->
+                                           <!-- <span class="elementor-grid-item"> 
+                                             <a class="elementor-icon elementor-social-icon elementor-social-icon-quora elementor-repeater-item-2bbaf43" target="_blank"> 
+                                                <span class="elementor-screen-only">Quora</span> <i class="fab fa-quora"></i> </a> </span> -->
+                                             </div>
                                     </div>
                                  </div>
                               </div>
@@ -979,7 +1030,7 @@
                   <div class="elementor-widget-wrap elementor-element-populated">
                      <div class="elementor-element elementor-element-3c1b83d elementor-invisible elementor-widget elementor-widget-heading" data-id="3c1b83d" data-element_type="widget" data-settings="{&quot;_animation&quot;:&quot;fadeInUp&quot;,&quot;_animation_delay&quot;:100}" data-widget_type="heading.default">
                         <div class="elementor-widget-container">
-                           <h5 class="elementor-heading-title elementor-size-default">For Products health care</h5>
+                           <h5 class="elementor-heading-title elementor-size-default">Help</h5>
                         </div>
                      </div>
                      <div class="elementor-element elementor-element-2ab4a3b elementor-widget-divider--view-line elementor-widget elementor-widget-divider" data-id="2ab4a3b" data-element_type="widget" data-widget_type="divider.default">
@@ -993,7 +1044,7 @@
                               <div class="elementor-widget-wrap elementor-element-populated">
                                  <div class="elementor-element elementor-element-1131c9d elementor-invisible elementor-widget elementor-widget-heading" data-id="1131c9d" data-element_type="widget" data-settings="{&quot;_animation&quot;:&quot;fadeInUp&quot;,&quot;_animation_delay&quot;:200}" data-widget_type="heading.default">
                                     <div class="elementor-widget-container">
-                                       <h6 class="elementor-heading-title elementor-size-default">Betel Help</h6>
+                                       <h6 class="elementor-heading-title elementor-size-default">Concat No</h6>
                                     </div>
                                  </div>
                                  <div class="elementor-element elementor-element-8ace36b elementor-invisible elementor-widget elementor-widget-text-editor" data-id="8ace36b" data-element_type="widget" data-settings="{&quot;_animation&quot;:&quot;fadeInUp&quot;,&quot;_animation_delay&quot;:300}" data-widget_type="text-editor.default">
@@ -1146,7 +1197,52 @@
       <script type='text/javascript' id='cb70d11b8-js-extra'> /* <![CDATA[ */
          var localize = {"ajaxurl":"https:\/\/demo2.strongtheme.com\/vitpro\/wp-admin\/admin-ajax.php","nonce":"f13b7d1c67","i18n":{"added":"Added ","compare":"Compare","loading":"Loading..."},"page_permalink":"https:\/\/demo2.strongtheme.com\/vitpro\/"};
          /* ]]> */ 
-      </script> <script type='text/javascript' src='wp-includes/js/dist/vendor/wp-polyfill.min2c7c.js?ver=3.15.0' id='wp-polyfill-js'></script> <script type='text/javascript' src='wp-includes/js/dist/hooks.mincbb5.js?ver=c6d64f2cb8f5c6bb49caca37f8828ce3' id='wp-hooks-js'></script> <script type='text/javascript' src='wp-includes/js/dist/i18n.min771a.js?ver=ebee46757c6a411e38fd079a7ac71d94' id='wp-i18n-js'></script> <script type='text/javascript' id='elementor-pro-frontend-js-before'> var ElementorProFrontendConfig = {"ajaxurl":"https:\/\/demo2.strongtheme.com\/vitpro\/wp-admin\/admin-ajax.php","nonce":"40a19c97f2","urls":{"assets":"https:\/\/demo2.strongtheme.com\/vitpro\/wp-content\/plugins\/elementor-pro\/assets\/","rest":"https:\/\/demo2.strongtheme.com\/vitpro\/wp-json\/"},"shareButtonsNetworks":{"facebook":{"title":"Facebook","has_counter":true},"twitter":{"title":"Twitter"},"linkedin":{"title":"LinkedIn","has_counter":true},"pinterest":{"title":"Pinterest","has_counter":true},"reddit":{"title":"Reddit","has_counter":true},"vk":{"title":"VK","has_counter":true},"odnoklassniki":{"title":"OK","has_counter":true},"tumblr":{"title":"Tumblr"},"digg":{"title":"Digg"},"skype":{"title":"Skype"},"stumbleupon":{"title":"StumbleUpon","has_counter":true},"mix":{"title":"Mix"},"telegram":{"title":"Telegram"},"pocket":{"title":"Pocket","has_counter":true},"xing":{"title":"XING","has_counter":true},"whatsapp":{"title":"WhatsApp"},"email":{"title":"Email"},"print":{"title":"Print"}},"facebook_sdk":{"lang":"en_US","app_id":""},"lottie":{"defaultAnimationUrl":"https:\/\/demo2.strongtheme.com\/vitpro\/wp-content\/plugins\/elementor-pro\/modules\/lottie\/assets\/animations\/default.json"}}; </script> <script type='text/javascript' id='elementor-frontend-js-before'> var elementorFrontendConfig = {"environmentMode":{"edit":false,"wpPreview":false,"isScriptDebug":false},"i18n":{"shareOnFacebook":"Share on Facebook","shareOnTwitter":"Share on Twitter","pinIt":"Pin it","download":"Download","downloadImage":"Download image","fullscreen":"Fullscreen","zoom":"Zoom","share":"Share","playVideo":"Play Video","previous":"Previous","next":"Next","close":"Close"},"is_rtl":false,"breakpoints":{"xs":0,"sm":480,"md":768,"lg":1025,"xl":1440,"xxl":1600},"responsive":{"breakpoints":{"mobile":{"label":"Mobile","value":767,"default_value":767,"direction":"max","is_enabled":true},"mobile_extra":{"label":"Mobile Extra","value":880,"default_value":880,"direction":"max","is_enabled":false},"tablet":{"label":"Tablet","value":1024,"default_value":1024,"direction":"max","is_enabled":true},"tablet_extra":{"label":"Tablet Extra","value":1200,"default_value":1200,"direction":"max","is_enabled":false},"laptop":{"label":"Laptop","value":1366,"default_value":1366,"direction":"max","is_enabled":false},"widescreen":{"label":"Widescreen","value":2400,"default_value":2400,"direction":"min","is_enabled":false}}},"version":"3.9.1","is_static":false,"experimentalFeatures":{"e_dom_optimization":true,"e_optimized_assets_loading":true,"a11y_improvements":true,"e_import_export":true,"e_hidden_wordpress_widgets":true,"theme_builder_v2":true,"landing-pages":true,"elements-color-picker":true,"favorite-widgets":true,"admin-top-bar":true,"kit-elements-defaults":true,"page-transitions":true,"form-submissions":true,"e_scroll_snap":true},"urls":{"assets":"https:\/\/demo2.strongtheme.com\/vitpro\/wp-content\/plugins\/elementor\/assets\/"},"settings":{"page":[],"editorPreferences":[]},"kit":{"active_breakpoints":["viewport_mobile","viewport_tablet"],"global_image_lightbox":"yes","lightbox_enable_counter":"yes","lightbox_enable_fullscreen":"yes","lightbox_enable_zoom":"yes","lightbox_enable_share":"yes","lightbox_title_src":"title","lightbox_description_src":"description"},"post":{"id":7,"title":"Vitpro%20%E2%80%93%20Just%20another%20My%20WordPress%20Sites%20site","excerpt":"","featuredImage":false}}; </script> <script defer src="wp-content/uploads/sites/4/siteground-optimizer-assets/siteground-optimizer-combined-js-57ef9496f16703981cf6a41960f39513.js"></script>
+      </script> 
+      <script type='text/javascript' src='wp-includes/js/dist/vendor/wp-polyfill.min2c7c.js?ver=3.15.0' id='wp-polyfill-js'></script> <script type='text/javascript' src='wp-includes/js/dist/hooks.mincbb5.js?ver=c6d64f2cb8f5c6bb49caca37f8828ce3' id='wp-hooks-js'></script> <script type='text/javascript' src='wp-includes/js/dist/i18n.min771a.js?ver=ebee46757c6a411e38fd079a7ac71d94' id='wp-i18n-js'></script> <script type='text/javascript' id='elementor-pro-frontend-js-before'> var ElementorProFrontendConfig = {"ajaxurl":"https:\/\/demo2.strongtheme.com\/vitpro\/wp-admin\/admin-ajax.php","nonce":"40a19c97f2","urls":{"assets":"https:\/\/demo2.strongtheme.com\/vitpro\/wp-content\/plugins\/elementor-pro\/assets\/","rest":"https:\/\/demo2.strongtheme.com\/vitpro\/wp-json\/"},"shareButtonsNetworks":{"facebook":{"title":"Facebook","has_counter":true},"twitter":{"title":"Twitter"},"linkedin":{"title":"LinkedIn","has_counter":true},"pinterest":{"title":"Pinterest","has_counter":true},"reddit":{"title":"Reddit","has_counter":true},"vk":{"title":"VK","has_counter":true},"odnoklassniki":{"title":"OK","has_counter":true},"tumblr":{"title":"Tumblr"},"digg":{"title":"Digg"},"skype":{"title":"Skype"},"stumbleupon":{"title":"StumbleUpon","has_counter":true},"mix":{"title":"Mix"},"telegram":{"title":"Telegram"},"pocket":{"title":"Pocket","has_counter":true},"xing":{"title":"XING","has_counter":true},"whatsapp":{"title":"WhatsApp"},"email":{"title":"Email"},"print":{"title":"Print"}},"facebook_sdk":{"lang":"en_US","app_id":""},"lottie":{"defaultAnimationUrl":"https:\/\/demo2.strongtheme.com\/vitpro\/wp-content\/plugins\/elementor-pro\/modules\/lottie\/assets\/animations\/default.json"}}; </script> <script type='text/javascript' id='elementor-frontend-js-before'> var elementorFrontendConfig = {"environmentMode":{"edit":false,"wpPreview":false,"isScriptDebug":false},"i18n":{"shareOnFacebook":"Share on Facebook","shareOnTwitter":"Share on Twitter","pinIt":"Pin it","download":"Download","downloadImage":"Download image","fullscreen":"Fullscreen","zoom":"Zoom","share":"Share","playVideo":"Play Video","previous":"Previous","next":"Next","close":"Close"},"is_rtl":false,"breakpoints":{"xs":0,"sm":480,"md":768,"lg":1025,"xl":1440,"xxl":1600},"responsive":{"breakpoints":{"mobile":{"label":"Mobile","value":767,"default_value":767,"direction":"max","is_enabled":true},"mobile_extra":{"label":"Mobile Extra","value":880,"default_value":880,"direction":"max","is_enabled":false},"tablet":{"label":"Tablet","value":1024,"default_value":1024,"direction":"max","is_enabled":true},"tablet_extra":{"label":"Tablet Extra","value":1200,"default_value":1200,"direction":"max","is_enabled":false},"laptop":{"label":"Laptop","value":1366,"default_value":1366,"direction":"max","is_enabled":false},"widescreen":{"label":"Widescreen","value":2400,"default_value":2400,"direction":"min","is_enabled":false}}},"version":"3.9.1","is_static":false,"experimentalFeatures":{"e_dom_optimization":true,"e_optimized_assets_loading":true,"a11y_improvements":true,"e_import_export":true,"e_hidden_wordpress_widgets":true,"theme_builder_v2":true,"landing-pages":true,"elements-color-picker":true,"favorite-widgets":true,"admin-top-bar":true,"kit-elements-defaults":true,"page-transitions":true,"form-submissions":true,"e_scroll_snap":true},"urls":{"assets":"https:\/\/demo2.strongtheme.com\/vitpro\/wp-content\/plugins\/elementor\/assets\/"},"settings":{"page":[],"editorPreferences":[]},"kit":{"active_breakpoints":["viewport_mobile","viewport_tablet"],"global_image_lightbox":"yes","lightbox_enable_counter":"yes","lightbox_enable_fullscreen":"yes","lightbox_enable_zoom":"yes","lightbox_enable_share":"yes","lightbox_title_src":"title","lightbox_description_src":"description"},"post":{"id":7,"title":"Vitpro%20%E2%80%93%20Just%20another%20My%20WordPress%20Sites%20site","excerpt":"","featuredImage":false}}; </script> <script defer src="wp-content/uploads/sites/4/siteground-optimizer-assets/siteground-optimizer-combined-js-57ef9496f16703981cf6a41960f39513.js"></script>
+      <script>
+      $( document ).ready(function() {
+         if($('#cars1').val() == "250"){
+               $('#price1').text('₹ 180')
+            }
+            else{
+               $('#price1').text('₹ 320')
+            }
+            if($('#cars').val() == "250"){
+               $('#price').text('₹ 180')
+            }
+            else{
+               $('#price').text('₹ 320')
+            }
+         
+         $("#cars1").change(function() {
+         
+            if($('#cars1').val() == '250')
+            {
+               $('#price1').text('₹ 180')
+            }
+            else{
+               $('#price1').text('₹ 320')
+            }
+          
+      
+    });
+    $("#cars").change(function() {
+          
+            if($('#cars').val() == '250')
+            {
+               $('#price').text('₹ 180')
+            }
+            else{
+               $('#price').text('₹ 320')
+            }
+          
+      
+    });
+            });
+
+      </script>
    </body>
+
+
    <!-- Mirrored from demo2.strongtheme.com/vitpro/ by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 17 Dec 2022 13:53:15 GMT -->
 </html>
