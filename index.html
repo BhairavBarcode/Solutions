@@ -48,6 +48,30 @@
   opacity: 80%;
   height: 100px;
   margin-top: -20px !important;
+  transition: 1s;
+}
+
+.DisplayImg{
+   width: 100%;
+
+}
+.ShowImg{
+   display: none !important;
+}
+
+@media only screen and (max-width: 600px) {
+   .DisplayImg{
+   display: none !important;
+}
+.ShowImg{
+   display: block !important;
+   background-image: url(Images/SRJ_0223-removebg.png);
+    background-position: center;
+    margin-top: -80px;
+    background-size: 800px;
+    min-height: 300px;
+    margin-bottom: 40px;
+}
 }
 
       </style>
@@ -166,7 +190,7 @@
          </defs>
       </svg>
       <div data-elementor-type="header" data-elementor-id="146" class="elementor elementor-146 elementor-location-header">
-         <section class="elementor-section elementor-top-section elementor-element elementor-element-2512ebc elementor-section-height-min-height elementor-section-boxed elementor-section-height-default elementor-section-items-middle"  id="navbar" style="margin-bottom: -120px;" data-id="2512ebc" data-element_type="section">
+         <section class="elementor-section elementor-top-section elementor-element elementor-element-2512ebc elementor-section-height-min-height elementor-section-boxed elementor-section-height-default elementor-section-items-middle"  id="navbar" style="margin-bottom: -130px;" data-id="2512ebc" data-element_type="section">
             <div class="elementor-container elementor-column-gap-default">
                <div class="elementor-column elementor-col-50 elementor-top-column elementor-element elementor-element-5c0484d" data-id="5c0484d" data-element_type="column">
                   <div class="elementor-widget-wrap elementor-element-populated">
@@ -270,11 +294,14 @@
                               <div class="elementor-widget-wrap elementor-element-populated">
                                    
                                  <div class="elementor-element elementor-element-3b4dfa9 elementor-invisible elementor-widget elementor-widget-image" data-id="3b4dfa9" data-element_type="widget" data-settings="{&quot;_animation&quot;:&quot;fadeIn&quot;,&quot;_animation_delay&quot;:200}" data-widget_type="image.default">
-                                   <img src="Images/SRJ_0223-removebg.png"  style="max-width:80vw; position: relative;bottom: 0;right: 300px;" class="" alt="" loading="lazy"/>
+                                   <img src="Images/SRJ_0223-removebg.png"  style="max-width:80vw; position: relative;bottom: 0;right: 300px;" class="DisplayImg" alt="" loading="lazy"/>
                                  </div>
                               </div>
                            </div>
                         </div>
+                        <section class="col-md-12 ShowImg" >
+                           <!-- <img src="Images/SRJ_0223-removebg.png" width="500" class="DisplayImg"/> -->
+                           </section>
                      </section>
                   </div>
                </div>
